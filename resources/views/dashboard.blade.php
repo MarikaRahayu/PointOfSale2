@@ -1069,16 +1069,46 @@ body {
 
             <!-- =================================================
                  TOMBOL < DAN > PALING BAWAH
+                 PERBAIKAN PAGINATION TANGGAL
             ================================================== -->
+
+            @php
+                /*
+                 * Ambil tanggal aktif yang sedang ditampilkan.
+                 * Jika DashboardController sudah mengirim $tanggalHariIni,
+                 * gunakan tanggal tersebut.
+                 */
+                $tanggalAktif = \Carbon\Carbon::parse($tanggalHariIni)->startOfDay();
+
+                /*
+                 * Cari tanggal transaksi yang benar-benar ada di database.
+                 * Tombol < akan menuju transaksi sebelumnya.
+                 * Tombol > akan menuju transaksi sesudahnya.
+                 */
+                $tanggalSebelumnya = \App\Models\Penjualan::query()
+                    ->whereDate('created_at', '<', $tanggalAktif)
+                    ->orderBy('created_at', 'desc')
+                    ->value('created_at');
+
+                $tanggalSesudahnya = \App\Models\Penjualan::query()
+                    ->whereDate('created_at', '>', $tanggalAktif)
+                    ->orderBy('created_at', 'asc')
+                    ->value('created_at');
+
+                $tanggalSebelumnya = $tanggalSebelumnya
+                    ? \Carbon\Carbon::parse($tanggalSebelumnya)
+                    : null;
+
+                $tanggalSesudahnya = $tanggalSesudahnya
+                    ? \Carbon\Carbon::parse($tanggalSesudahnya)
+                    : null;
+            @endphp
 
             <div class="date-navigation">
 
                 {{-- TRANSAKSI SEBELUMNYA --}}
 
-                @if(
-                    isset($tanggalSebelumnya) &&
-                    $tanggalSebelumnya
-                )
+                @if($tanggalSebelumnya)
 
                     <a
                         href="{{ request()->url() }}?tanggal={{ $tanggalSebelumnya->format('Y-m-d') }}"
@@ -1101,10 +1131,7 @@ body {
 
                 {{-- TRANSAKSI BERIKUTNYA --}}
 
-                @if(
-                    isset($tanggalSesudahnya) &&
-                    $tanggalSesudahnya
-                )
+                @if($tanggalSesudahnya)
 
                     <a
                         href="{{ request()->url() }}?tanggal={{ $tanggalSesudahnya->format('Y-m-d') }}"

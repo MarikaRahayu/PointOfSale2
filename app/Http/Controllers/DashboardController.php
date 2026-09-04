@@ -12,7 +12,8 @@ class DashboardController extends Controller
     public function __construct(
         protected LaporanPenjualanService $laporanService,
         protected MonitoringStokService $stokService
-    ) {}
+    ) {
+    }
 
     public function index()
     {
@@ -43,13 +44,15 @@ class DashboardController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        if ($tanggalDipilih->greaterThan(Carbon::today())) {
-            $tanggalDipilih = Carbon::today();
+        $hariIni = Carbon::today();
+
+        if ($tanggalDipilih->greaterThan($hariIni)) {
+            $tanggalDipilih = $hariIni->copy();
         }
 
         /*
         |--------------------------------------------------------------------------
-        | RINGKASAN PENJUALAN BERDASARKAN TANGGAL
+        | RINGKASAN PENJUALAN
         |--------------------------------------------------------------------------
         */
 
@@ -58,7 +61,7 @@ class DashboardController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | PRODUK TERLARIS BERDASARKAN TANGGAL
+        | PRODUK TERLARIS
         |--------------------------------------------------------------------------
         */
 
@@ -67,21 +70,39 @@ class DashboardController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | TANGGAL TRANSAKSI SEBELUMNYA
+        | TANGGAL SEBELUMNYA
         |--------------------------------------------------------------------------
+        |
+        | Mundur tepat 1 hari.
+        |
         */
 
-        $tanggalSebelumnya = $this->laporanService
-            ->tanggalSebelumnya($tanggalDipilih);
+        $tanggalSebelumnya = $tanggalDipilih
+            ->copy()
+            ->subDay();
 
         /*
         |--------------------------------------------------------------------------
-        | TANGGAL TRANSAKSI SESUDAHNYA
+        | TANGGAL SESUDAHNYA
+        |--------------------------------------------------------------------------
+        |
+        | Maju tepat 1 hari.
+        |
+        */
+
+        $tanggalSesudahnya = $tanggalDipilih
+            ->copy()
+            ->addDay();
+
+        /*
+        |--------------------------------------------------------------------------
+        | JANGAN BOLEH > MELEWATI HARI INI
         |--------------------------------------------------------------------------
         */
 
-        $tanggalSesudahnya = $this->laporanService
-            ->tanggalSesudahnya($tanggalDipilih);
+        if ($tanggalSesudahnya->greaterThan($hariIni)) {
+            $tanggalSesudahnya = null;
+        }
 
         /*
         |--------------------------------------------------------------------------
@@ -91,30 +112,48 @@ class DashboardController extends Controller
 
         return view('dashboard', [
 
-            // Tanggal yang sedang ditampilkan
+            /*
+            | Tanggal yang sedang ditampilkan
+            */
             'tanggalHariIni' => $tanggalDipilih,
 
-            // Ringkasan penjualan tanggal tersebut
+            /*
+            | Ringkasan penjualan
+            */
             'ringkasan' => $ringkasan,
 
-            // Produk terlaris tanggal tersebut
+            /*
+            | Produk terlaris
+            */
             'produkTerlaris' => $produkTerlaris,
 
-            // Monitoring stok tetap berdasarkan kondisi stok sekarang
+            /*
+            | Produk stok rendah
+            */
             'produkStokRendah' =>
                 $this->stokService->produkStokRendah(),
 
+            /*
+            | Produk stok habis
+            */
             'produkStokHabis' =>
                 $this->stokService->produkStokHabis(),
 
-            // Total jenis produk
+            /*
+            | Total jenis produk
+            */
             'totalJenis' =>
                 JenisProduk::count(),
 
-            // Navigasi tanggal
+            /*
+            | Tombol <
+            */
             'tanggalSebelumnya' =>
                 $tanggalSebelumnya,
 
+            /*
+            | Tombol >
+            */
             'tanggalSesudahnya' =>
                 $tanggalSesudahnya,
         ]);
