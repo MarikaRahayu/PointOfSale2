@@ -1,809 +1,679 @@
 @extends('layouts.app')
 
-@section('title','Dashboard')
+@section('title', 'Dashboard')
 
 @section('content')
 
-<style>
+    <style>
+        /* =========================================================
+           BABY BLUE DASHBOARD
+        ========================================================= */
 
-/* =========================================================
-   BABY BLUE DASHBOARD
-========================================================= */
+        :root {
+            --baby-blue: #89CFF0;
+            --blue-main: #5BBCE4;
+            --blue-dark: #247BA0;
+            --blue-deep: #155E75;
+            --blue-light: #F0FAFF;
+            --blue-soft: #E3F6FD;
+            --blue-border: #B9E5F7;
+            --white: #ffffff;
+        }
 
-:root {
-    --baby-blue: #89CFF0;
-    --blue-main: #5BBCE4;
-    --blue-dark: #247BA0;
-    --blue-deep: #155E75;
-    --blue-light: #F0FAFF;
-    --blue-soft: #E3F6FD;
-    --blue-border: #B9E5F7;
-    --white: #ffffff;
-}
+        /* =========================================================
+           PAGE
+        ========================================================= */
 
-/* =========================================================
-   PAGE
-========================================================= */
+        body {
+            background: #f4fbff;
+        }
 
-body {
-    background: #f4fbff;
-}
+        /* =========================================================
+           WELCOME CARD
+        ========================================================= */
 
-/* =========================================================
-   WELCOME CARD
-========================================================= */
+        .welcome-card {
+            background: linear-gradient(135deg,
+                    #B8E7FA 0%,
+                    #89CFF0 45%,
+                    #5BBCE4 100%);
 
-.welcome-card {
-    background: linear-gradient(
-        135deg,
-        #B8E7FA 0%,
-        #89CFF0 45%,
-        #5BBCE4 100%
-    );
+            border-radius: 22px;
+            padding: 28px 32px;
 
-    border-radius: 22px;
-    padding: 28px 32px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
+            display: flex;
+            align-items: center;
 
-    box-shadow:
-        0 12px 30px rgba(91, 188, 228, 0.30);
+            gap: 20px;
 
-    margin-bottom: 30px;
-    animation: fadeInDown .6s ease;
+            box-shadow:
+                0 12px 30px rgba(91, 188, 228, 0.30);
 
-    position: relative;
-    overflow: hidden;
-}
+            margin-bottom: 30px;
 
-.welcome-card::before {
-    content: "";
-    position: absolute;
+            animation: fadeInDown .6s ease;
 
-    width: 180px;
-    height: 180px;
+            position: relative;
+            overflow: hidden;
+        }
 
-    background: rgba(255,255,255,0.18);
+        .welcome-card::before {
+            content: "";
 
-    border-radius: 50%;
+            position: absolute;
 
-    right: -60px;
-    top: -70px;
-}
+            width: 180px;
+            height: 180px;
 
-.welcome-card::after {
-    content: "";
-    position: absolute;
+            background: rgba(255, 255, 255, 0.18);
 
-    width: 120px;
-    height: 120px;
+            border-radius: 50%;
 
-    background: rgba(255,255,255,0.12);
+            right: -60px;
+            top: -70px;
+        }
 
-    border-radius: 50%;
+        .welcome-card::after {
+            content: "";
 
-    right: 100px;
-    bottom: -70px;
-}
+            position: absolute;
 
-/* =========================================================
-   WELCOME TEXT
-========================================================= */
+            width: 120px;
+            height: 120px;
 
-.welcome-text {
-    position: relative;
-    z-index: 2;
-}
+            background: rgba(255, 255, 255, 0.12);
 
-.welcome-text h3 {
-    color: white;
-    font-weight: 800;
+            border-radius: 50%;
 
-    margin-bottom: 8px;
+            right: 100px;
+            bottom: -70px;
+        }
 
-    font-size: 25px;
+        /* =========================================================
+           WELCOME TEXT
+        ========================================================= */
 
-    text-shadow:
-        0 2px 5px rgba(0,0,0,0.10);
-}
+        .welcome-text {
+            position: relative;
+            z-index: 2;
+        }
 
-/* =========================================================
-   ROLE
-========================================================= */
+        .welcome-text h3 {
+            color: white;
 
-.welcome-role {
-    display: inline-block;
+            font-weight: 800;
 
-    padding: 6px 18px;
+            margin-bottom: 8px;
 
-    border-radius: 30px;
+            font-size: 25px;
 
-    font-size: 13px;
+            text-shadow:
+                0 2px 5px rgba(0, 0, 0, 0.10);
+        }
 
-    font-weight: 700;
+        /* =========================================================
+           ROLE
+        ========================================================= */
 
-    letter-spacing: .5px;
+        .welcome-role {
+            display: inline-block;
 
-    text-transform: uppercase;
+            padding: 6px 18px;
 
-    box-shadow:
-        0 3px 8px rgba(0,0,0,0.08);
-}
+            border-radius: 30px;
 
-.role-admin {
-    background: #FFF4CC;
-    color: #8A6D00;
-}
+            font-size: 13px;
 
-.role-kasir {
-    background: #D9F7E8;
-    color: #087A45;
-}
+            font-weight: 700;
 
-.role-default {
-    background: #FFFFFF;
-    color: var(--blue-dark);
-}
+            letter-spacing: .5px;
 
-/* =========================================================
-   MAIN CARD
-========================================================= */
+            text-transform: uppercase;
 
-.container > .card {
-    background: var(--blue-light) !important;
-}
+            box-shadow:
+                0 3px 8px rgba(0, 0, 0, 0.08);
+        }
 
-/* =========================================================
-   SECTION TITLE
-========================================================= */
+        .role-admin {
+            background: #FFF4CC;
+            color: #8A6D00;
+        }
 
-.text-center h1 {
-    color: var(--blue-dark) !important;
+        .role-kasir {
+            background: #D9F7E8;
+            color: #087A45;
+        }
 
-    font-weight: 800;
+        .role-default {
+            background: #FFFFFF;
+            color: var(--blue-dark);
+        }
 
-    letter-spacing: .3px;
-}
+        /* =========================================================
+           MAIN CARD
+        ========================================================= */
 
-.text-center h4 {
-    color: #6c757d !important;
-}
+        .container>.card {
+            background: var(--blue-light) !important;
+        }
 
-.text-center h2 {
-    color: var(--blue-main) !important;
+        /* =========================================================
+           SECTION TITLE
+        ========================================================= */
 
-    font-weight: 800;
-}
+        .text-center h1 {
+            color: var(--blue-dark) !important;
 
-/* =========================================================
-   ALL CARDS
-========================================================= */
+            font-weight: 800;
 
-.card {
-    border: none !important;
+            letter-spacing: .3px;
+        }
 
-    border-radius: 18px !important;
+        .text-center h4 {
+            color: #6c757d !important;
+        }
 
-    overflow: hidden;
+        .text-center h2 {
+            color: var(--blue-main) !important;
 
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease;
-}
+            font-weight: 800;
+        }
 
-.card:hover {
-    transform: translateY(-3px);
+        /* =========================================================
+           ALL CARDS
+        ========================================================= */
 
-    box-shadow:
-        0 12px 28px rgba(91, 188, 228, 0.18) !important;
-}
+        .card {
+            border: none !important;
 
-/* =========================================================
-   CARD HEADER
-========================================================= */
+            border-radius: 18px !important;
 
-.card-header {
-    background: linear-gradient(
-        135deg,
-        #89CFF0,
-        #5BBCE4
-    ) !important;
+            overflow: hidden;
 
-    border: none !important;
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease;
+        }
 
-    padding: 15px 18px;
+        .card:hover {
+            transform: translateY(-3px);
 
-    font-size: 15px;
+            box-shadow:
+                0 12px 28px rgba(91, 188, 228, 0.18) !important;
+        }
 
-    letter-spacing: .2px;
-}
+        /* =========================================================
+           CARD HEADER
+        ========================================================= */
 
-/* =========================================================
-   CARD BODY
-========================================================= */
+        .card-header {
+            background: linear-gradient(135deg,
+                    #89CFF0,
+                    #5BBCE4) !important;
 
-.card-body {
-    background: #F8FDFF !important;
-}
+            border: none !important;
 
-/* =========================================================
-   SALES NUMBER
-========================================================= */
+            padding: 15px 18px;
 
-.card-body h1 {
-    color: var(--blue-dark) !important;
+            font-size: 15px;
 
-    font-weight: 800;
+            letter-spacing: .2px;
+        }
 
-    font-size: 30px;
-}
+        /* =========================================================
+           CARD BODY
+        ========================================================= */
 
-/* =========================================================
-   TABLE
-========================================================= */
+        .card-body {
+            background: #F8FDFF !important;
+        }
 
-.table {
-    border-color: var(--blue-border) !important;
+        /* =========================================================
+           SALES NUMBER
+        ========================================================= */
 
-    margin-bottom: 0;
-}
+        .card-body h1 {
+            color: var(--blue-dark) !important;
 
-.table thead th {
-    font-weight: 700;
+            font-weight: 800;
 
-    vertical-align: middle;
-}
+            font-size: 30px;
+        }
 
-.table-danger {
-    --bs-table-bg: #DDF4FC !important;
-    --bs-table-color: #155E75 !important;
-}
+        /* =========================================================
+           TABLE
+        ========================================================= */
 
-.table-warning {
-    --bs-table-bg: #E5F7FD !important;
-    --bs-table-color: #155E75 !important;
-}
+        .table {
+            border-color: var(--blue-border) !important;
 
-.table-success {
-    --bs-table-bg: #DDF4FC !important;
-    --bs-table-color: #155E75 !important;
-}
+            margin-bottom: 0;
+        }
 
-/* =========================================================
-   HEADER PRODUK HABIS
-========================================================= */
+        .table thead th {
+            font-weight: 700;
 
-.table-blue {
-    background: #DDF4FC !important;
+            vertical-align: middle;
+        }
 
-    color: #155E75 !important;
-}
+        .table-danger {
+            --bs-table-bg: #DDF4FC !important;
+            --bs-table-color: #155E75 !important;
+        }
 
-.table-blue th {
-    background: #DDF4FC !important;
+        .table-warning {
+            --bs-table-bg: #E5F7FD !important;
+            --bs-table-color: #155E75 !important;
+        }
 
-    color: #155E75 !important;
-}
+        .table-success {
+            --bs-table-bg: #DDF4FC !important;
+            --bs-table-color: #155E75 !important;
+        }
 
-/* =========================================================
-   ISI TABEL
-========================================================= */
+        /* =========================================================
+           HEADER PRODUK HABIS
+        ========================================================= */
 
-.table tbody tr {
-    transition:
-        background .2s ease;
-}
+        .table-blue {
+            background: #DDF4FC !important;
 
-.table tbody tr:hover {
-    background: #F0FAFF !important;
-}
+            color: #155E75 !important;
+        }
 
-.table td,
-.table th {
-    border-color: var(--blue-border) !important;
+        .table-blue th {
+            background: #DDF4FC !important;
 
-    padding: 12px;
-}
+            color: #155E75 !important;
+        }
 
-/* =========================================================
-   EMPTY DATA
-========================================================= */
+        /* =========================================================
+           ISI TABEL
+        ========================================================= */
 
-.empty-data {
-    text-align: center;
+        .table tbody tr {
+            transition: background .2s ease;
+        }
 
-    color: #777;
+        .table tbody tr:hover {
+            background: #F0FAFF !important;
+        }
 
-    padding: 18px !important;
-}
+        .table td,
+        .table th {
+            border-color: var(--blue-border) !important;
 
-/* =========================================================
-   PAYMENT STATUS
-========================================================= */
+            padding: 12px;
+        }
 
-.text-success {
-    color: #159A75 !important;
-}
+        /* =========================================================
+           EMPTY DATA
+        ========================================================= */
 
-.text-primary {
-    color: var(--blue-dark) !important;
-}
+        .empty-data {
+            text-align: center;
 
-/* =========================================================
-   PAGINATION
-========================================================= */
+            color: #777;
 
-.pagination .page-link {
-    color: var(--blue-dark);
+            padding: 18px !important;
+        }
 
-    border-color: var(--blue-border);
+        /* =========================================================
+           PAYMENT STATUS
+        ========================================================= */
 
-    background: white;
-}
+        .text-success {
+            color: #159A75 !important;
+        }
 
-.pagination .page-link:hover {
-    color: white;
+        .text-primary {
+            color: var(--blue-dark) !important;
+        }
 
-    background: var(--blue-main);
+        /* =========================================================
+           STATUS TRANSAKSI
+        ========================================================= */
 
-    border-color: var(--blue-main);
-}
+        .status-badge {
+            display: inline-block;
 
-.pagination .active .page-link {
-    background: var(--blue-main);
+            padding: 5px 12px;
 
-    border-color: var(--blue-main);
-}
+            border-radius: 20px;
 
-/* =========================================================
-   SHADOW
-========================================================= */
+            font-size: 12px;
 
-.shadow {
-    box-shadow:
-        0 6px 20px rgba(36, 123, 160, 0.10) !important;
-}
+            font-weight: 700;
 
-.shadow-lg {
-    box-shadow:
-        0 10px 30px rgba(36, 123, 160, 0.12) !important;
-}
+            text-transform: uppercase;
+        }
 
-/* =========================================================
-   SECTION SPACING
-========================================================= */
+        .status-completed {
+            background: #D9F7E8;
 
-.mt-5 {
-    margin-top: 2.5rem !important;
-}
+            color: #087A45;
+        }
 
-/* =========================================================
-   ANIMATION
-========================================================= */
+        .status-pending {
+            background: #FFF4CC;
 
-@keyframes fadeInDown {
+            color: #8A6D00;
+        }
 
-    from {
-        opacity: 0;
+        .status-cancelled {
+            background: #FFE1E7;
 
-        transform:
-            translateY(-15px);
-    }
+            color: #B4233C;
+        }
 
-    to {
-        opacity: 1;
+        .status-default {
+            background: #E3F6FD;
 
-        transform:
-            translateY(0);
-    }
-}
+            color: #247BA0;
+        }
 
-/* =========================================================
-   TOMBOL < DAN >
-========================================================= */
+        /* =========================================================
+           TRANSAKSI TERBARU
+        ========================================================= */
 
-.date-navigation {
-    display: flex;
+        .transaction-table-wrapper {
+            overflow-x: auto;
+        }
 
-    justify-content: center;
+        .transaction-table {
+            min-width: 850px;
+        }
 
-    align-items: center;
+        .transaction-user {
+            font-weight: 700;
 
-    gap: 12px;
+            color: var(--blue-dark);
+        }
 
-    margin-top: 25px;
+        .transaction-total {
+            font-weight: 800;
 
-    margin-bottom: 5px;
-}
+            color: var(--blue-dark);
 
-.date-navigation a {
-    width: 42px;
+            white-space: nowrap;
+        }
 
-    height: 42px;
+        .transaction-method {
+            font-weight: 600;
+        }
 
-    display: flex;
+        .transaction-time {
+            color: #6c757d;
 
-    align-items: center;
+            white-space: nowrap;
+        }
 
-    justify-content: center;
+        /* =========================================================
+           DATE NAVIGATION
+        ========================================================= */
 
-    text-decoration: none;
+        .date-navigation {
+            display: flex;
 
-    background: #E3F6FD;
+            justify-content: center;
 
-    color: #247BA0;
+            align-items: center;
 
-    border: 1px solid #B9E5F7;
+            gap: 12px;
 
-    border-radius: 10px;
+            margin-top: 25px;
 
-    font-size: 24px;
+            margin-bottom: 5px;
+        }
 
-    font-weight: 700;
+        .date-navigation a {
+            width: 42px;
 
-    transition: all .2s ease;
-}
+            height: 42px;
 
-.date-navigation a:hover {
-    background: #5BBCE4;
+            display: flex;
 
-    color: white;
+            align-items: center;
 
-    transform: translateY(-2px);
+            justify-content: center;
 
-    box-shadow:
-        0 5px 12px rgba(91, 188, 228, 0.25);
-}
+            text-decoration: none;
 
-.date-navigation .disabled {
-    width: 42px;
+            background: #E3F6FD;
 
-    height: 42px;
+            color: #247BA0;
 
-    display: flex;
+            border: 1px solid #B9E5F7;
 
-    align-items: center;
+            border-radius: 10px;
 
-    justify-content: center;
+            font-size: 24px;
 
-    background: #f1f5f9;
+            font-weight: 700;
 
-    color: #cbd5e1;
+            transition: all .2s ease;
+        }
 
-    border: 1px solid #e2e8f0;
+        .date-navigation a:hover {
+            background: #5BBCE4;
 
-    border-radius: 10px;
+            color: white;
 
-    font-size: 24px;
+            transform: translateY(-2px);
 
-    font-weight: 700;
-}
+            box-shadow:
+                0 5px 12px rgba(91, 188, 228, 0.25);
+        }
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+        .date-navigation .disabled {
+            width: 42px;
 
-@media (max-width: 768px) {
+            height: 42px;
 
-    .welcome-card {
-        padding: 22px;
-    }
+            display: flex;
 
-    .welcome-text h3 {
-        font-size: 20px;
-    }
+            align-items: center;
 
-    .card-body h1 {
-        font-size: 25px;
-    }
+            justify-content: center;
 
-}
+            background: #f1f5f9;
 
-</style>
+            color: #cbd5e1;
 
+            border: 1px solid #e2e8f0;
 
-<!-- =========================================================
-     CONTAINER
-========================================================= -->
+            border-radius: 10px;
 
-<div class="container mt-4">
+            font-size: 24px;
 
-    <div
-        class="card border-0 shadow-lg rounded-4"
-        style="background:#fff0f6;"
-    >
+            font-weight: 700;
+        }
 
-        <div class="card-body p-5">
+        /* =========================================================
+           ANIMATION
+        ========================================================= */
 
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
 
-            <!-- =================================================
-                 ROLE USER
-            ================================================== -->
+                transform: translateY(-15px);
+            }
 
-            @php
+            to {
+                opacity: 1;
 
-                $roleName =
-                    optional(auth()->user()->role)->name ?? '-';
+                transform: translateY(0);
+            }
+        }
 
-                $roleClass =
-                    match(strtolower($roleName)) {
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
 
-                        'admin' => 'role-admin',
+        @media (max-width: 768px) {
 
-                        'kasir' => 'role-kasir',
+            .welcome-card {
+                padding: 22px;
+            }
 
-                        default => 'role-default',
+            .welcome-text h3 {
+                font-size: 20px;
+            }
 
-                    };
+            .card-body h1 {
+                font-size: 25px;
+            }
 
-            @endphp
+            .transaction-table {
+                min-width: 750px;
+            }
+        }
+    </style>
 
 
-            <!-- =================================================
-                 WELCOME
-            ================================================== -->
+    <!-- =========================================================
+         CONTAINER
+    ========================================================= -->
 
-            <div class="welcome-card">
+    <div class="container mt-4">
 
-                <div class="welcome-text">
+        <div class="card border-0 shadow-lg rounded-4">
 
-                    <h3>
+            <div class="card-body p-5">
 
-                        Selamat Datang,
-                        {{ auth()->user()->name }} 👋
 
-                    </h3>
+                <!-- =================================================
+                     ROLE USER
+                ================================================== -->
 
-                    <span class="welcome-role {{ $roleClass }}">
+                @php
 
-                        {{ ucfirst($roleName) }}
+                    $roleName =
+                        optional(auth()->user()->role)->name ?? '-';
 
-                    </span>
+                    $roleClass =
+                        match (strtolower($roleName)) {
 
-                </div>
+                            'admin' => 'role-admin',
 
-            </div>
+                            'kasir' => 'role-kasir',
 
+                            default => 'role-default',
+                        };
 
-            <!-- =================================================
-                 JUDUL DAN TANGGAL
-            ================================================== -->
+                @endphp
 
-            <div class="text-center mb-5">
 
-                <h1 class="fw-bold">
+                <!-- =================================================
+                     WELCOME
+                ================================================== -->
 
-                    Ringkasan Penjualan
+                <div class="welcome-card">
 
-                </h1>
+                    <div class="welcome-text">
 
-                <h4 class="text-secondary">
+                        <h3>
+                            Selamat Datang,
+                            {{ auth()->user()->name }} 👋
+                        </h3>
 
-                    (
-
-                    {{
-                        $tanggalHariIni
-                            ->locale('id')
-                            ->translatedFormat('l, d F Y')
-                    }}
-
-                    )
-
-                </h4>
-
-                <h2 class="mt-3 fw-bold">
-
-                    Today's Sales
-
-                </h2>
-
-            </div>
-
-
-            <!-- =================================================
-                 RINGKASAN PENJUALAN
-            ================================================== -->
-
-            <div class="row g-4">
-
-                <!-- TOTAL PENJUALAN -->
-
-                <div class="col-md-6">
-
-                    <div
-                        class="card border-0 shadow rounded-4 h-100"
-                    >
-
-                        <div
-                            class="card-header text-white text-center fw-bold"
-                        >
-
-                            💰 Total Nilai Penjualan
-
-                        </div>
-
-                        <div
-                            class="card-body text-center py-5"
-                        >
-
-                            <h1 class="fw-bold">
-
-                                Rp
-
-                                {{
-                                    number_format(
-                                        $ringkasan['total_penjualan'] ?? 0,
-                                        0,
-                                        ',',
-                                        '.'
-                                    )
-                                }}
-
-                            </h1>
-
-                        </div>
+                        <span class="welcome-role {{ $roleClass }}">
+                            {{ ucfirst($roleName) }}
+                        </span>
 
                     </div>
 
                 </div>
 
 
-                <!-- JUMLAH TRANSAKSI -->
+                <!-- =================================================
+                     JUDUL DAN TANGGAL
+                ================================================== -->
 
-                <div class="col-md-6">
+                <div class="text-center mb-5">
 
-                    <div
-                        class="card border-0 shadow rounded-4 h-100"
-                    >
+                    <h1 class="fw-bold">
+                        Ringkasan Penjualan
+                    </h1>
 
-                        <div
-                            class="card-header text-white text-center fw-bold"
-                        >
+                    <h4 class="text-secondary">
 
-                            🧾 Jumlah Transaksi
+                        (
+                        {{
+        $tanggalHariIni
+            ->locale('id')
+            ->translatedFormat('l, d F Y')
+                        }}
+                        )
 
-                        </div>
+                    </h4>
 
-                        <div
-                            class="card-body text-center py-5"
-                        >
-
-                            <h1 class="fw-bold">
-
-                                {{
-                                    $ringkasan['total_transaksi'] ?? 0
-                                }}
-
-                            </h1>
-
-                        </div>
-
-                    </div>
+                    <h2 class="mt-3 fw-bold">
+                        Today's Sales
+                    </h2>
 
                 </div>
 
-            </div>
 
+                <!-- =================================================
+                     RINGKASAN PENJUALAN
+                ================================================== -->
 
-            <!-- =================================================
-                 CASH & PAYMENT STATUS
-            ================================================== -->
+                <div class="row g-4">
 
-            <div class="mt-5">
+                    <!-- TOTAL PENJUALAN -->
 
-                <div
-                    class="card border-0 shadow rounded-4"
-                >
+                    <div class="col-md-6">
 
-                    <div
-                        class="card-header text-white text-center fw-bold"
-                    >
+                        <div class="card border-0 shadow rounded-4 h-100">
 
-                        💳 Cash & Payment Status
+                            <div class="card-header text-white text-center fw-bold">
+                                💰 Total Nilai Penjualan
+                            </div>
 
-                    </div>
+                            <div class="card-body text-center py-5">
 
-                    <div class="card-body">
+                                <h1 class="fw-bold">
 
-                        <div class="row">
+                                    Rp
+                                    {{
+        number_format(
+            $ringkasan['total_penjualan'] ?? 0,
+            0,
+            ',',
+            '.'
+        )
+                                    }}
 
-                            <!-- CASH -->
-
-                            <div class="col-md-6">
-
-                                <table
-                                    class="table table-bordered text-center"
-                                >
-
-                                    <thead class="table-danger">
-
-                                        <tr>
-
-                                            <th>
-                                                Total Pembayaran Tunai
-                                            </th>
-
-                                        </tr>
-
-                                    </thead>
-
-                                    <tbody>
-
-                                        <tr>
-
-                                            <td
-                                                class="fw-bold text-success"
-                                            >
-
-                                                Rp
-
-                                                {{
-                                                    number_format(
-                                                        $ringkasan['total_cash'] ?? 0,
-                                                        0,
-                                                        ',',
-                                                        '.'
-                                                    )
-                                                }}
-
-                                            </td>
-
-                                        </tr>
-
-                                    </tbody>
-
-                                </table>
+                                </h1>
 
                             </div>
 
+                        </div>
 
-                            <!-- NON CASH -->
+                    </div>
 
-                            <div class="col-md-6">
 
-                                <table
-                                    class="table table-bordered text-center"
-                                >
+                    <!-- JUMLAH TRANSAKSI -->
 
-                                    <thead class="table-danger">
+                    <div class="col-md-6">
 
-                                        <tr>
+                        <div class="card border-0 shadow rounded-4 h-100">
 
-                                            <th>
-                                                Total Pembayaran Non Tunai
-                                            </th>
+                            <div class="card-header text-white text-center fw-bold">
+                                🧾 Jumlah Transaksi
+                            </div>
 
-                                        </tr>
+                            <div class="card-body text-center py-5">
 
-                                    </thead>
+                                <h1 class="fw-bold">
 
-                                    <tbody>
+                                    {{
+        $ringkasan['total_transaksi'] ?? 0
+                                    }}
 
-                                        <tr>
-
-                                            <td
-                                                class="fw-bold text-primary"
-                                            >
-
-                                                Rp
-
-                                                {{
-                                                    number_format(
-                                                        $ringkasan['total_non_tunai'] ?? 0,
-                                                        0,
-                                                        ',',
-                                                        '.'
-                                                    )
-                                                }}
-
-                                            </td>
-
-                                        </tr>
-
-                                    </tbody>
-
-                                </table>
+                                </h1>
 
                             </div>
 
@@ -813,152 +683,314 @@ body {
 
                 </div>
 
-            </div>
+
+                <!-- =================================================
+                     CASH & PAYMENT STATUS
+                ================================================== -->
+
+                <div class="mt-5">
+
+                    <div class="card border-0 shadow rounded-4">
+
+                        <div class="card-header text-white text-center fw-bold">
+                            💳 Cash & Payment Status
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="row">
 
 
-            <!-- =================================================
-                 CRITICAL INVENTORY
-            ================================================== -->
+                                <!-- CASH -->
 
-            <div class="mt-5">
+                                <div class="col-md-6">
 
-                <div
-                    class="card border-0 shadow rounded-4"
-                >
+                                    <table class="table table-bordered text-center">
 
-                    <div
-                        class="card-header text-white text-center fw-bold"
-                    >
-
-                        ⚠️ Critical Inventory Status
-
-                    </div>
-
-                    <div class="card-body">
-
-                        <div class="row">
-
-                            <!-- PRODUK STOK RENDAH -->
-
-                            <div class="col-md-6">
-
-                                <table
-                                    class="table table-bordered"
-                                >
-
-                                    <thead class="table-warning">
-
-                                        <tr>
-
-                                            <th>
-                                                Daftar Produk Rendah
-                                            </th>
-
-                                            <th>
-                                                Stok
-                                            </th>
-
-                                        </tr>
-
-                                    </thead>
-
-                                    <tbody>
-
-                                        @forelse(
-                                            $produkStokRendah
-                                            as $produk
-                                        )
-
-                                            @if(
-                                                $produk->stok > 0 &&
-                                                $produk->stok <= 10
-                                            )
-
-                                                <tr>
-
-                                                    <td>
-                                                        {{ $produk->nama }}
-                                                    </td>
-
-                                                    <td
-                                                        class="text-center fw-bold"
-                                                    >
-                                                        {{ $produk->stok }}
-                                                    </td>
-
-                                                </tr>
-
-                                            @endif
-
-                                        @empty
+                                        <thead class="table-danger">
 
                                             <tr>
 
-                                                <td
-                                                    colspan="2"
-                                                    class="empty-data"
-                                                >
-                                                    Belum ada data
+                                                <th>
+                                                    Total Pembayaran Tunai
+                                                </th>
+
+                                            </tr>
+
+                                        </thead>
+
+                                        <tbody>
+
+                                            <tr>
+
+                                                <td class="fw-bold text-success">
+
+                                                    Rp
+                                                    {{
+        number_format(
+            $ringkasan['total_cash'] ?? 0,
+            0,
+            ',',
+            '.'
+        )
+                                                    }}
+
                                                 </td>
 
                                             </tr>
 
-                                        @endforelse
+                                        </tbody>
 
-                                    </tbody>
+                                    </table>
 
-                                </table>
+                                </div>
+
+
+                                <!-- NON CASH -->
+
+                                <div class="col-md-6">
+
+                                    <table class="table table-bordered text-center">
+
+                                        <thead class="table-danger">
+
+                                            <tr>
+
+                                                <th>
+                                                    Total Pembayaran Non Tunai
+                                                </th>
+
+                                            </tr>
+
+                                        </thead>
+
+                                        <tbody>
+
+                                            <tr>
+
+                                                <td class="fw-bold text-primary">
+
+                                                    Rp
+                                                    {{
+        number_format(
+            $ringkasan['total_non_tunai'] ?? 0,
+            0,
+            ',',
+            '.'
+        )
+                                                    }}
+
+                                                </td>
+
+                                            </tr>
+
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
 
                             </div>
 
+                        </div>
 
-                            <!-- PRODUK HABIS -->
+                    </div>
 
-                            <div class="col-md-6">
+                </div>
 
-                                <table
-                                    class="table table-bordered"
-                                >
+
+                <!-- =================================================
+                     TRANSAKSI TERBARU
+                ================================================== -->
+
+                <div class="mt-5">
+
+                    <div class="card border-0 shadow rounded-4">
+
+                        <div class="card-header text-white text-center fw-bold">
+                            🧾 Transaksi Terbaru
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="transaction-table-wrapper">
+
+                                <table class="table table-bordered table-hover transaction-table">
 
                                     <thead class="table-blue">
 
                                         <tr>
 
+                                            <th class="text-center">
+                                                No
+                                            </th>
+
                                             <th>
-                                                Produk Habis
+                                                User
+                                            </th>
+
+                                            <th>
+                                                Total Pembayaran
+                                            </th>
+
+                                            <th>
+                                                Metode Pembayaran
+                                            </th>
+
+                                            <th>
+                                                Status
+                                            </th>
+
+                                            <th>
+                                                Waktu
                                             </th>
 
                                         </tr>
 
                                     </thead>
 
+
                                     <tbody>
 
-                                        @forelse(
-                                            $produkStokHabis
-                                            as $produk
-                                        )
+                                        @forelse($transaksiTerbaru as $transaksi)
 
-                                            @if($produk->stok == 0)
+                                                                        @php
 
-                                                <tr>
+                                                                            $status =
+                                                                                strtolower(
+                                                                                    $transaksi->status ?? ''
+                                                                                );
 
-                                                    <td>
-                                                        {{ $produk->nama }}
-                                                    </td>
+                                                                            $statusClass =
+                                                                                match ($status) {
 
-                                                </tr>
+                                                                                    'selesai',
+                                                                                    'completed'
+                                                                                    => 'status-completed',
 
-                                            @endif
+                                                                                    'pending'
+                                                                                    => 'status-pending',
+
+                                                                                    'cancelled',
+                                                                                    'canceled'
+                                                                                    => 'status-cancelled',
+
+                                                                                    default
+                                                                                    => 'status-default',
+                                                                                };
+
+                                                                        @endphp
+
+
+                                                                        <tr>
+
+                                                                            <!-- NO -->
+
+                                                                            <td class="text-center fw-bold">
+                                                                                {{ $loop->iteration }}
+                                                                            </td>
+
+
+                                                                            <!-- USER -->
+
+                                                                            <td>
+
+                                                                                <span class="transaction-user">
+
+                                                                                    {{ $transaksi->user->name ?? '-' }}
+
+                                                                                </span>
+
+                                                                            </td>
+
+
+                                                                            <!-- TOTAL -->
+
+                                                                            <td>
+
+                                                                                <span class="transaction-total">
+
+                                                                                    Rp
+                                                                                    {{
+                                            number_format(
+                                                $transaksi->total_pembayaran ?? 0,
+                                                0,
+                                                ',',
+                                                '.'
+                                            )
+                                                                                        }}
+
+                                                                                </span>
+
+                                                                            </td>
+
+
+                                                                            <!-- METODE -->
+
+                                                                            <td>
+
+                                                                                <span class="transaction-method">
+
+                                                                                    {{
+                                            $transaksi->metode_pembayaran
+                                            ?? '-'
+                                                                                        }}
+
+                                                                                </span>
+
+                                                                            </td>
+
+
+                                                                            <!-- STATUS -->
+
+                                                                            <td>
+
+                                                                                <span class="status-badge {{ $statusClass }}">
+
+                                                                                    {{
+                                            $transaksi->status ?? '-'
+                                                                                        }}
+
+                                                                                </span>
+
+                                                                            </td>
+
+
+                                                                            <!-- WAKTU -->
+
+                                                                            <td>
+
+                                                                                <span class="transaction-time">
+
+                                                                                    @if($transaksi->tanggal_transaksi)
+
+                                                                                                                            {{
+                                                                                        \Carbon\Carbon::parse(
+                                                                                            $transaksi->tanggal_transaksi
+                                                                                        )->format('H:i')
+                                                                                                                                    }}
+
+                                                                                    @else
+
+                                                                                        -
+
+                                                                                    @endif
+
+                                                                                </span>
+
+                                                                            </td>
+
+                                                                        </tr>
 
                                         @empty
 
                                             <tr>
 
-                                                <td
-                                                    class="empty-data"
-                                                >
-                                                    Tidak ada produk habis.
+                                                <td colspan="6" class="empty-data">
+
+                                                    Belum ada transaksi
+                                                    pada tanggal ini.
+
                                                 </td>
 
                                             </tr>
@@ -977,187 +1009,320 @@ body {
 
                 </div>
 
-            </div>
+
+                <!-- =================================================
+                     CRITICAL INVENTORY
+                ================================================== -->
+
+                <div class="mt-5">
+
+                    <div class="card border-0 shadow rounded-4">
+
+                        <div class="card-header text-white text-center fw-bold">
+                            ⚠️ Critical Inventory Status
+                        </div>
 
 
-            <!-- =================================================
-                 BEST SELLER
-            ================================================== -->
+                        <div class="card-body">
 
-            <div class="mt-5">
+                            <div class="row">
 
-                <div
-                    class="card border-0 shadow rounded-4"
-                >
 
-                    <div
-                        class="card-header text-white text-center fw-bold"
-                    >
+                                <!-- PRODUK STOK RENDAH -->
 
-                        🏆 Best Seller Produk
+                                <div class="col-md-6">
 
-                    </div>
+                                    <table class="table table-bordered">
 
-                    <div class="card-body">
+                                        <thead class="table-warning">
 
-                        <table
-                            class="table table-bordered table-hover"
-                        >
+                                            <tr>
 
-                            <thead class="table-success">
+                                                <th>
+                                                    Daftar Produk Rendah
+                                                </th>
 
-                                <tr>
+                                                <th>
+                                                    Stok
+                                                </th>
 
-                                    <th>No</th>
+                                            </tr>
 
-                                    <th>Nama Produk</th>
+                                        </thead>
 
-                                    <th>Jumlah Terjual</th>
 
-                                </tr>
+                                        <tbody>
 
-                            </thead>
+                                            @php
+                                                $adaStokRendah = false;
+                                            @endphp
 
-                            <tbody>
 
-                                @forelse(
-                                    $produkTerlaris
-                                    as $index => $produk
-                                )
+                                            @forelse($produkStokRendah as $produk)
 
-                                    <tr>
+                                                @if(
+                                                        $produk->stok > 0 &&
+                                                        $produk->stok <= 10
+                                                    )
 
-                                        <td>
-                                            {{ $index + 1 }}
-                                        </td>
+                                                    @php
+                                                        $adaStokRendah = true;
+                                                    @endphp
 
-                                        <td>
-                                            {{ $produk->nama }}
-                                        </td>
 
-                                        <td>
-                                            {{ $produk->total_terjual }}
-                                        </td>
+                                                    <tr>
 
-                                    </tr>
+                                                        <td>
+                                                            {{ $produk->nama }}
+                                                        </td>
 
-                                @empty
+                                                        <td class="text-center fw-bold">
+                                                            {{ $produk->stok }}
+                                                        </td>
 
-                                    <tr>
+                                                    </tr>
 
-                                        <td
-                                            colspan="3"
-                                            class="text-center"
-                                        >
-                                            Belum ada data penjualan
-                                        </td>
+                                                @endif
 
-                                    </tr>
+                                            @empty
 
-                                @endforelse
+                                            @endforelse
 
-                            </tbody>
 
-                        </table>
+                                            @if(!$adaStokRendah)
+
+                                                <tr>
+
+                                                    <td colspan="2" class="empty-data">
+
+                                                        Tidak ada produk stok rendah.
+
+                                                    </td>
+
+                                                </tr>
+
+                                            @endif
+
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+
+
+                                <!-- PRODUK HABIS -->
+
+                                <div class="col-md-6">
+
+                                    <table class="table table-bordered">
+
+                                        <thead class="table-blue">
+
+                                            <tr>
+
+                                                <th>
+                                                    Produk Habis
+                                                </th>
+
+                                            </tr>
+
+                                        </thead>
+
+
+                                        <tbody>
+
+                                            @php
+                                                $adaStokHabis = false;
+                                            @endphp
+
+
+                                            @forelse($produkStokHabis as $produk)
+
+                                                @if($produk->stok == 0)
+
+                                                    @php
+                                                        $adaStokHabis = true;
+                                                    @endphp
+
+
+                                                    <tr>
+
+                                                        <td>
+                                                            {{ $produk->nama }}
+                                                        </td>
+
+                                                    </tr>
+
+                                                @endif
+
+                                            @empty
+
+                                            @endforelse
+
+
+                                            @if(!$adaStokHabis)
+
+                                                <tr>
+
+                                                    <td class="empty-data">
+
+                                                        Tidak ada produk habis.
+
+                                                    </td>
+
+                                                </tr>
+
+                                            @endif
+
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
                 </div>
 
+
+                <!-- =================================================
+                     BEST SELLER
+                ================================================== -->
+
+                <div class="mt-5">
+
+                    <div class="card border-0 shadow rounded-4">
+
+                        <div class="card-header text-white text-center fw-bold">
+                            🏆 Best Seller Produk
+                        </div>
+
+
+                        <div class="card-body">
+
+                            <table class="table table-bordered table-hover">
+
+                                <thead class="table-success">
+
+                                    <tr>
+
+                                        <th>
+                                            No
+                                        </th>
+
+                                        <th>
+                                            Nama Produk
+                                        </th>
+
+                                        <th>
+                                            Jumlah Terjual
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody>
+
+                                    @forelse($produkTerlaris as $index => $produk)
+
+                                        <tr>
+
+                                            <td>
+                                                {{ $index + 1 }}
+                                            </td>
+
+                                            <td>
+                                                {{ $produk->nama }}
+                                            </td>
+
+                                            <td>
+                                                {{ $produk->total_terjual }}
+                                            </td>
+
+                                        </tr>
+
+                                    @empty
+
+                                        <tr>
+
+                                            <td colspan="3" class="empty-data">
+
+                                                Belum ada data penjualan
+                                                pada tanggal ini.
+
+                                            </td>
+
+                                        </tr>
+
+                                    @endforelse
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     TOMBOL TANGGAL
+                ================================================== -->
+
+                <div class="date-navigation">
+
+
+                    {{-- TANGGAL SEBELUMNYA --}}
+
+                    @if($tanggalSebelumnya)
+
+                        <a href="{{ request()->url() }}?tanggal={{ $tanggalSebelumnya->format('Y-m-d') }}"
+                            title="Tanggal sebelumnya">
+                            &lt;
+                        </a>
+
+                    @else
+
+                        <span class="disabled" title="Tidak ada tanggal sebelumnya">
+                            &lt;
+                        </span>
+
+                    @endif
+
+
+                    {{-- TANGGAL SESUDAHNYA --}}
+
+                    @if($tanggalSesudahnya)
+
+                        <a href="{{ request()->url() }}?tanggal={{ $tanggalSesudahnya->format('Y-m-d') }}"
+                            title="Tanggal sesudahnya">
+                            &gt;
+                        </a>
+
+                    @else
+
+                        <span class="disabled" title="Tidak dapat menuju tanggal berikutnya">
+                            &gt;
+                        </span>
+
+                    @endif
+
+
+                </div>
+
+
             </div>
-
-
-            <!-- =================================================
-                 TOMBOL < DAN > PALING BAWAH
-                 PERBAIKAN PAGINATION TANGGAL
-            ================================================== -->
-
-            @php
-                /*
-                 * Ambil tanggal aktif yang sedang ditampilkan.
-                 * Jika DashboardController sudah mengirim $tanggalHariIni,
-                 * gunakan tanggal tersebut.
-                 */
-                $tanggalAktif = \Carbon\Carbon::parse($tanggalHariIni)->startOfDay();
-
-                /*
-                 * Cari tanggal transaksi yang benar-benar ada di database.
-                 * Tombol < akan menuju transaksi sebelumnya.
-                 * Tombol > akan menuju transaksi sesudahnya.
-                 */
-                $tanggalSebelumnya = \App\Models\Penjualan::query()
-                    ->whereDate('created_at', '<', $tanggalAktif)
-                    ->orderBy('created_at', 'desc')
-                    ->value('created_at');
-
-                $tanggalSesudahnya = \App\Models\Penjualan::query()
-                    ->whereDate('created_at', '>', $tanggalAktif)
-                    ->orderBy('created_at', 'asc')
-                    ->value('created_at');
-
-                $tanggalSebelumnya = $tanggalSebelumnya
-                    ? \Carbon\Carbon::parse($tanggalSebelumnya)
-                    : null;
-
-                $tanggalSesudahnya = $tanggalSesudahnya
-                    ? \Carbon\Carbon::parse($tanggalSesudahnya)
-                    : null;
-            @endphp
-
-            <div class="date-navigation">
-
-                {{-- TRANSAKSI SEBELUMNYA --}}
-
-                @if($tanggalSebelumnya)
-
-                    <a
-                        href="{{ request()->url() }}?tanggal={{ $tanggalSebelumnya->format('Y-m-d') }}"
-                        title="Transaksi tanggal sebelumnya"
-                    >
-                        &lt;
-                    </a>
-
-                @else
-
-                    <span
-                        class="disabled"
-                        title="Tidak ada transaksi sebelumnya"
-                    >
-                        &lt;
-                    </span>
-
-                @endif
-
-
-                {{-- TRANSAKSI BERIKUTNYA --}}
-
-                @if($tanggalSesudahnya)
-
-                    <a
-                        href="{{ request()->url() }}?tanggal={{ $tanggalSesudahnya->format('Y-m-d') }}"
-                        title="Transaksi tanggal berikutnya"
-                    >
-                        &gt;
-                    </a>
-
-                @else
-
-                    <span
-                        class="disabled"
-                        title="Tidak ada transaksi berikutnya"
-                    >
-                        &gt;
-                    </span>
-
-                @endif
-
-            </div>
-
 
         </div>
 
     </div>
-
-</div>
 
 @endsection

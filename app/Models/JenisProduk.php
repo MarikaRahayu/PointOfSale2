@@ -12,11 +12,20 @@ class JenisProduk extends Model
     protected $table = 'jenis_produk';
 
     protected $fillable = [
+        'user_id',
         'nama',
     ];
 
     /**
-     * Relasi ke produk
+     * Relasi ke User
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Relasi ke Produk
      */
     public function produk()
     {

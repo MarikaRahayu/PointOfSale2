@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\JenisProduk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JenisProdukController extends Controller
 {
@@ -15,6 +16,7 @@ class JenisProdukController extends Controller
         $keyword = $request->search;
 
         $jenisProduk = JenisProduk::query()
+            ->with('user')
             ->when($keyword, function ($query) use ($keyword) {
                 $query->where('nama', 'like', '%' . $keyword . '%');
             })
@@ -58,6 +60,7 @@ class JenisProdukController extends Controller
         ]);
 
         JenisProduk::create([
+            'user_id' => Auth::id(),
             'nama' => $request->nama,
         ]);
 
@@ -109,7 +112,10 @@ class JenisProdukController extends Controller
         if ($jenisProduk->produk()->exists()) {
             return redirect()
                 ->route('jenis-produk.index')
-                ->with('error', 'Jenis produk tidak dapat dihapus karena masih digunakan oleh produk.');
+                ->with(
+                    'error',
+                    'Jenis produk tidak dapat dihapus karena masih digunakan oleh produk.'
+                );
         }
 
         $jenisProduk->delete();

@@ -5,157 +5,111 @@ namespace App\Http\Controllers;
 use App\Models\JenisProduk;
 use App\Services\LaporanPenjualanService;
 use App\Services\MonitoringStokService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class DashboardController extends Controller
 {
     public function __construct(
-        protected LaporanPenjualanService $laporanService,
-        protected MonitoringStokService $stokService
+        protected LaporanPenjualanService $laporanPenjualanService,
+        protected MonitoringStokService $monitoringStokService
     ) {
     }
 
-    public function index()
+    public function index(Request $request)
     {
         /*
         |--------------------------------------------------------------------------
-        | TENTUKAN TANGGAL DASHBOARD
+        | TANGGAL YANG DIPILIH
         |--------------------------------------------------------------------------
+        | Jika tidak ada ?tanggal=..., otomatis menggunakan tanggal hari ini.
         */
-
-        $tanggal = request('tanggal');
-
-        if ($tanggal) {
-            try {
-                $tanggalDipilih = Carbon::createFromFormat(
-                    'Y-m-d',
-                    $tanggal
-                )->startOfDay();
-            } catch (\Exception $e) {
-                $tanggalDipilih = Carbon::today();
-            }
-        } else {
-            $tanggalDipilih = Carbon::today();
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | JANGAN BOLEH MEMILIH TANGGAL SETELAH HARI INI
-        |--------------------------------------------------------------------------
-        */
-
-        $hariIni = Carbon::today();
-
-        if ($tanggalDipilih->greaterThan($hariIni)) {
-            $tanggalDipilih = $hariIni->copy();
-        }
+        $tanggalHariIni = $request->filled('tanggal')
+            ? Carbon::parse($request->tanggal)
+            : Carbon::today();
 
         /*
         |--------------------------------------------------------------------------
         | RINGKASAN PENJUALAN
         |--------------------------------------------------------------------------
         */
-
-        $ringkasan = $this->laporanService
-            ->ringkasanTanggal($tanggalDipilih);
-
-        /*
-        |--------------------------------------------------------------------------
-        | PRODUK TERLARIS
-        |--------------------------------------------------------------------------
-        */
-
-        $produkTerlaris = $this->laporanService
-            ->produkTerlarisTanggal($tanggalDipilih);
+        $ringkasan = $this->laporanPenjualanService
+            ->ringkasan($tanggalHariIni);
 
         /*
         |--------------------------------------------------------------------------
-        | TANGGAL SEBELUMNYA
+        | TRANSAKSI TERBARU
         |--------------------------------------------------------------------------
-        |
-        | Mundur tepat 1 hari.
-        |
         */
+        $transaksiTerbaru = $this->laporanPenjualanService
+            ->transaksiTerbaru($tanggalHariIni);
 
-        $tanggalSebelumnya = $tanggalDipilih
-            ->copy()
-            ->subDay();
+        /*
+        |--------------------------------------------------------------------------
+        | BEST SELLER
+        |--------------------------------------------------------------------------
+        */
+        $produkTerlaris = $this->laporanPenjualanService
+            ->produkTerlaris($tanggalHariIni);
+
+        /*
+        |--------------------------------------------------------------------------
+        | STOK RENDAH & HABIS
+        |--------------------------------------------------------------------------
+        */
+        $produkStokRendah = $this->monitoringStokService
+            ->produkStokRendah($tanggalHariIni);
+
+        $produkStokHabis = $this->monitoringStokService
+            ->produkStokHabis($tanggalHariIni);
+
+        /*
+        |--------------------------------------------------------------------------
+        | TOTAL JENIS PRODUK
+        |--------------------------------------------------------------------------
+        */
+        $totalJenis = JenisProduk::count();
+
+        /*
+        |--------------------------------------------------------------------------
+        | TANGGAL SEBELUMNYA DAN SESUDAHNYA
+        |--------------------------------------------------------------------------
+        | Dibuat per hari.
+        |
+        | Contoh:
+        | 7 September -> 6 September
+        | 6 September -> 5 September
+        |
+        | Jadi tanggal yang tidak memiliki transaksi tetap bisa dibuka.
+        |--------------------------------------------------------------------------
+        */
+        $tanggalSebelumnya = $tanggalHariIni->copy()->subDay();
 
         /*
         |--------------------------------------------------------------------------
         | TANGGAL SESUDAHNYA
         |--------------------------------------------------------------------------
-        |
-        | Maju tepat 1 hari.
-        |
-        */
-
-        $tanggalSesudahnya = $tanggalDipilih
-            ->copy()
-            ->addDay();
-
-        /*
-        |--------------------------------------------------------------------------
-        | JANGAN BOLEH > MELEWATI HARI INI
+        | Jangan izinkan maju ke tanggal masa depan.
         |--------------------------------------------------------------------------
         */
+        $hariIni = Carbon::today();
 
-        if ($tanggalSesudahnya->greaterThan($hariIni)) {
+        if ($tanggalHariIni->copy()->addDay()->lte($hariIni)) {
+            $tanggalSesudahnya = $tanggalHariIni->copy()->addDay();
+        } else {
             $tanggalSesudahnya = null;
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | DATA DASHBOARD
-        |--------------------------------------------------------------------------
-        */
-
-        return view('dashboard', [
-
-            /*
-            | Tanggal yang sedang ditampilkan
-            */
-            'tanggalHariIni' => $tanggalDipilih,
-
-            /*
-            | Ringkasan penjualan
-            */
-            'ringkasan' => $ringkasan,
-
-            /*
-            | Produk terlaris
-            */
-            'produkTerlaris' => $produkTerlaris,
-
-            /*
-            | Produk stok rendah
-            */
-            'produkStokRendah' =>
-                $this->stokService->produkStokRendah(),
-
-            /*
-            | Produk stok habis
-            */
-            'produkStokHabis' =>
-                $this->stokService->produkStokHabis(),
-
-            /*
-            | Total jenis produk
-            */
-            'totalJenis' =>
-                JenisProduk::count(),
-
-            /*
-            | Tombol <
-            */
-            'tanggalSebelumnya' =>
-                $tanggalSebelumnya,
-
-            /*
-            | Tombol >
-            */
-            'tanggalSesudahnya' =>
-                $tanggalSesudahnya,
-        ]);
+        return view('dashboard', compact(
+            'tanggalHariIni',
+            'ringkasan',
+            'transaksiTerbaru',
+            'produkTerlaris',
+            'produkStokRendah',
+            'produkStokHabis',
+            'totalJenis',
+            'tanggalSebelumnya',
+            'tanggalSesudahnya'
+        ));
     }
 }

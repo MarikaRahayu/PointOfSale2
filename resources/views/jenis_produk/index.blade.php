@@ -81,6 +81,7 @@ body {
 
 .jenis-header::before {
     content: "";
+
     position: absolute;
     left: 0;
     top: -10px;
@@ -134,11 +135,13 @@ body {
 
     display: inline-flex;
     align-items: center;
+
     gap: 9px;
 
     padding: 12px 20px;
 
     color: white;
+
     text-decoration: none;
 
     border: none;
@@ -257,6 +260,7 @@ body {
 
     display: flex;
     align-items: center;
+
     gap: 10px;
 
     margin: 0;
@@ -428,7 +432,8 @@ body {
 .table-responsive {
     border-radius: 15px;
 
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
 
     border:
         1px solid #e3f3f8;
@@ -440,6 +445,10 @@ body {
    ========================================================= */
 
 .table {
+    width: 100%;
+
+    min-width: 850px;
+
     margin-bottom: 0;
 
     border-collapse: separate;
@@ -542,11 +551,46 @@ body {
 
 
 /* =========================================================
+   USER
+   ========================================================= */
+
+.nama-user {
+    display: inline-flex;
+
+    align-items: center;
+
+    color: #315f70;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.nama-user i {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+
+    margin-right: 10px;
+
+    color: var(--blue-600);
+
+    border-radius: 9px;
+
+    background: var(--blue-100);
+}
+
+
+/* =========================================================
    NAMA JENIS
    ========================================================= */
 
 .nama-jenis {
     display: inline-flex;
+
     align-items: center;
 
     color: #315f70;
@@ -557,6 +601,7 @@ body {
 
 .nama-jenis i {
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
 
@@ -579,6 +624,7 @@ body {
 
 .badge-jumlah {
     display: inline-flex;
+
     align-items: center;
 
     gap: 5px;
@@ -615,6 +661,7 @@ body {
 .btn-edit,
 .btn-hapus {
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
 
@@ -634,7 +681,9 @@ body {
 }
 
 
-/* EDIT */
+/* =========================================================
+   EDIT
+   ========================================================= */
 
 .btn-edit {
     color: var(--blue-700);
@@ -661,7 +710,9 @@ body {
 }
 
 
-/* HAPUS */
+/* =========================================================
+   HAPUS
+   ========================================================= */
 
 .btn-hapus {
     color: white;
@@ -742,6 +793,7 @@ body {
 
 .empty-state-icon {
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -835,6 +887,7 @@ body {
    ========================================================= */
 
 @keyframes jenisFade {
+
     from {
         opacity: 0;
         transform: translateY(15px);
@@ -844,6 +897,7 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
+
 }
 
 
@@ -913,12 +967,13 @@ body {
     }
 
     .table {
-        min-width: 720px;
+        min-width: 850px;
     }
 
     .pagination {
         justify-content: center;
     }
+
 }
 
 
@@ -959,7 +1014,6 @@ body {
 
         <p class="jenis-subtitle">
             Kelola kategori dan jenis produk toko
-            
         </p>
 
     </div>
@@ -1005,8 +1059,10 @@ body {
 
     <div class="btn-tambah-wrapper">
 
-        <a href="{{ route('jenis-produk.create') }}"
-           class="btn-tambah">
+        <a
+            href="{{ route('jenis-produk.create') }}"
+            class="btn-tambah"
+        >
 
             <i class="bi bi-plus-lg"></i>
 
@@ -1024,7 +1080,9 @@ body {
     <div class="jenis-card">
 
 
-        {{-- CARD HEADER --}}
+        {{-- =================================================
+             CARD HEADER
+        ================================================== --}}
 
         <div class="jenis-card-header">
 
@@ -1047,7 +1105,9 @@ body {
         </div>
 
 
-        {{-- CARD BODY --}}
+        {{-- =================================================
+             CARD BODY
+        ================================================== --}}
 
         <div class="jenis-card-body">
 
@@ -1103,18 +1163,27 @@ body {
 
                         <tr>
 
+                            {{-- NO --}}
                             <th style="width: 80px;">
                                 No
                             </th>
 
+                            {{-- USER --}}
+                            <th style="width: 200px;">
+                                User
+                            </th>
+
+                            {{-- NAMA --}}
                             <th>
                                 Nama Jenis Produk
                             </th>
 
+                            {{-- JUMLAH --}}
                             <th style="width: 190px;">
                                 Jumlah Produk
                             </th>
 
+                            {{-- AKSI --}}
                             <th style="width: 190px;">
                                 Aksi
                             </th>
@@ -1130,7 +1199,10 @@ body {
 
                             <tr>
 
-                                {{-- NOMOR --}}
+
+                                {{-- =================================================
+                                     NOMOR
+                                ================================================== --}}
 
                                 <td>
 
@@ -1143,7 +1215,26 @@ body {
                                 </td>
 
 
-                                {{-- NAMA --}}
+                                {{-- =================================================
+                                     USER
+                                ================================================== --}}
+
+                                <td>
+
+                                    <span class="nama-user">
+
+                                        <i class="bi bi-person-fill"></i>
+
+                                        {{ $item->user->name ?? '-' }}
+
+                                    </span>
+
+                                </td>
+
+
+                                {{-- =================================================
+                                     NAMA JENIS
+                                ================================================== --}}
 
                                 <td>
 
@@ -1158,7 +1249,9 @@ body {
                                 </td>
 
 
-                                {{-- JUMLAH PRODUK --}}
+                                {{-- =================================================
+                                     JUMLAH PRODUK
+                                ================================================== --}}
 
                                 <td>
 
@@ -1175,7 +1268,9 @@ body {
                                 </td>
 
 
-                                {{-- AKSI --}}
+                                {{-- =================================================
+                                     AKSI
+                                ================================================== --}}
 
                                 <td>
 
@@ -1202,6 +1297,7 @@ body {
 
                                         @method('DELETE')
 
+
                                         <button
                                             type="submit"
                                             class="btn-hapus"
@@ -1219,12 +1315,18 @@ body {
 
                             </tr>
 
+
                         @empty
+
+
+                            {{-- =================================================
+                                 EMPTY STATE
+                            ================================================== --}}
 
                             <tr>
 
                                 <td
-                                    colspan="4"
+                                    colspan="5"
                                     class="text-center empty-state"
                                 >
 
@@ -1244,6 +1346,7 @@ body {
 
                             </tr>
 
+
                         @endforelse
 
                     </tbody>
@@ -1258,6 +1361,7 @@ body {
             ================================================== --}}
 
             {{ $jenisProduk->links() }}
+
 
         </div>
 

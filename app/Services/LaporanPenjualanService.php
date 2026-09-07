@@ -2,229 +2,88 @@
 
 namespace App\Services;
 
+use App\Models\Penjualan;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class LaporanPenjualanService
 {
-    /*
-    |--------------------------------------------------------------------------
-    | RINGKASAN PENJUALAN BERDASARKAN TANGGAL
-    |--------------------------------------------------------------------------
-    */
-
-    public function ringkasanTanggal(Carbon $tanggal): array
+    /**
+     * Ringkasan penjualan berdasarkan tanggal.
+     */
+    public function ringkasan(Carbon|string $tanggal): array
     {
-        $tanggal = $tanggal->format('Y-m-d');
+        $tanggal = Carbon::parse($tanggal)->toDateString();
 
-        $data = DB::table('penjualan')
-            ->whereDate('created_at', $tanggal)
-            ->selectRaw('
-                COUNT(*) AS total_transaksi,
-
-                COALESCE(
-                    SUM(total_pembayaran),
-                    0
-                ) AS total_penjualan,
-
-                COALESCE(
-                    SUM(
-                        CASE
-                            WHEN UPPER(metode_pembayaran) = "CASH"
-                            THEN total_pembayaran
-                            ELSE 0
-                        END
-                    ),
-                    0
-                ) AS total_cash,
-
-                COALESCE(
-                    SUM(
-                        CASE
-                            WHEN UPPER(metode_pembayaran) <> "CASH"
-                            THEN total_pembayaran
-                            ELSE 0
-                        END
-                    ),
-                    0
-                ) AS total_non_tunai
-            ')
-            ->first();
+        $query = Penjualan::query()
+            ->whereDate('tanggal_transaksi', $tanggal)
+            ->where('status', 'SELESAI');
 
         return [
-            'total_transaksi' => (int) ($data->total_transaksi ?? 0),
+            'total_transaksi' => (clone $query)->count(),
 
-            'total_penjualan' => (float) ($data->total_penjualan ?? 0),
+            'total_penjualan' => (clone $query)
+                ->sum('total_pembayaran'),
 
-            'total_cash' => (float) ($data->total_cash ?? 0),
+            'total_cash' => (clone $query)
+                ->whereRaw('UPPER(metode_pembayaran) = ?', ['CASH'])
+                ->sum('total_pembayaran'),
 
-            'total_non_tunai' => (float) ($data->total_non_tunai ?? 0),
+            'total_non_tunai' => (clone $query)
+                ->whereRaw('UPPER(metode_pembayaran) <> ?', ['CASH'])
+                ->sum('total_pembayaran'),
         ];
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | PRODUK TERLARIS BERDASARKAN TANGGAL
-    |--------------------------------------------------------------------------
-    */
+    /**
+     * Menampilkan transaksi berdasarkan tanggal.
+     */
+    public function transaksiTerbaru(Carbon|string $tanggal)
+    {
+        $tanggal = Carbon::parse($tanggal)->toDateString();
 
-    public function produkTerlarisTanggal(
-        Carbon $tanggal,
-        int $limit = 5
-    ) {
-        $tanggal = $tanggal->format('Y-m-d');
-
-        return DB::table('item_penjualan')
-
-            ->join(
-                'penjualan',
-                'penjualan.id',
-                '=',
-                'item_penjualan.penjualan_id'
-            )
-
-            ->join(
-                'produk',
-                'produk.id',
-                '=',
-                'item_penjualan.produk_id'
-            )
-
-            ->whereDate(
-                'penjualan.created_at',
-                $tanggal
-            )
-
-            ->select(
-                'produk.id',
-                'produk.nama'
-            )
-
-            ->selectRaw(
-                'SUM(item_penjualan.qty) AS total_terjual'
-            )
-
-            ->groupBy(
-                'produk.id',
-                'produk.nama'
-            )
-
-            ->orderByDesc('total_terjual')
-
-            ->limit($limit)
-
+        return Penjualan::with('user')
+            ->whereDate('tanggal_transaksi', $tanggal)
+            ->where('status', 'SELESAI')
+            ->orderByDesc('tanggal_transaksi')
             ->get();
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | MENCARI TANGGAL TRANSAKSI SEBELUMNYA
-    |--------------------------------------------------------------------------
-    */
-
-    public function tanggalSebelumnya(Carbon $tanggal)
+    /**
+     * Menampilkan produk terlaris berdasarkan tanggal.
+     */
+    public function produkTerlaris(Carbon|string $tanggal)
     {
-        $tanggalSekarang = $tanggal->format('Y-m-d');
+        $tanggal = Carbon::parse($tanggal)->toDateString();
 
-        $hasil = DB::table('penjualan')
-
-            ->whereDate(
-                'created_at',
-                '<',
-                $tanggalSekarang
+        return DB::table('item_penjualan')
+            ->join(
+                'penjualan',
+                'item_penjualan.penjualan_id',
+                '=',
+                'penjualan.id'
             )
-
-            ->selectRaw(
-                'DATE(created_at) AS tanggal'
+            ->join(
+                'produk',
+                'item_penjualan.produk_id',
+                '=',
+                'produk.id'
             )
-
+            ->whereDate('penjualan.tanggal_transaksi', $tanggal)
+            ->where('penjualan.status', 'SELESAI')
+            ->select(
+                'produk.id',
+                'produk.nama',
+                DB::raw('SUM(item_penjualan.qty) as total_terjual')
+            )
             ->groupBy(
-                DB::raw('DATE(created_at)')
+                'produk.id',
+                'produk.nama'
             )
-
-            ->orderByDesc('tanggal')
-
-            ->first();
-
-        if (!$hasil) {
-            return null;
-        }
-
-        return Carbon::createFromFormat(
-            'Y-m-d',
-            $hasil->tanggal
-        )->startOfDay();
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | MENCARI TANGGAL TRANSAKSI SESUDAHNYA
-    |--------------------------------------------------------------------------
-    */
-
-    public function tanggalSesudahnya(Carbon $tanggal)
-    {
-        $tanggalSekarang = $tanggal->format('Y-m-d');
-
-        $hasil = DB::table('penjualan')
-
-            ->whereDate(
-                'created_at',
-                '>',
-                $tanggalSekarang
-            )
-
-            ->selectRaw(
-                'DATE(created_at) AS tanggal'
-            )
-
-            ->groupBy(
-                DB::raw('DATE(created_at)')
-            )
-
-            ->orderBy('tanggal')
-
-            ->first();
-
-        if (!$hasil) {
-            return null;
-        }
-
-        return Carbon::createFromFormat(
-            'Y-m-d',
-            $hasil->tanggal
-        )->startOfDay();
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | METHOD LAMA
-    |--------------------------------------------------------------------------
-    */
-
-    public function ringkasanHariIni(): array
-    {
-        return $this->ringkasanTanggal(
-            Carbon::today()
-        );
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | METHOD LAMA PRODUK TERLARIS
-    |--------------------------------------------------------------------------
-    */
-
-    public function produkTerlarisHariIni($limit = 5)
-    {
-        return $this->produkTerlarisTanggal(
-            Carbon::today(),
-            $limit
-        );
+            ->orderByDesc('total_terjual')
+            ->limit(10)
+            ->get();
     }
 }
