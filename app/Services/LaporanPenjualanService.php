@@ -17,7 +17,7 @@ class LaporanPenjualanService
 
         $query = Penjualan::query()
             ->whereDate('tanggal_transaksi', $tanggal)
-            ->where('status', 'SELESAI');
+            ->whereRaw('UPPER(status) = ?', ['SELESAI']);
 
         return [
             'total_transaksi' => (clone $query)->count(),
@@ -45,7 +45,7 @@ class LaporanPenjualanService
 
         return Penjualan::with('user')
             ->whereDate('tanggal_transaksi', $tanggal)
-            ->where('status', 'SELESAI')
+            ->whereRaw('UPPER(status) = ?', ['SELESAI'])
             ->orderByDesc('tanggal_transaksi')
             ->get();
     }
@@ -72,7 +72,7 @@ class LaporanPenjualanService
                 'produk.id'
             )
             ->whereDate('penjualan.tanggal_transaksi', $tanggal)
-            ->where('penjualan.status', 'SELESAI')
+            ->whereRaw('UPPER(penjualan.status) = ?', ['SELESAI'])
             ->select(
                 'produk.id',
                 'produk.nama',

@@ -10,6 +10,7 @@ class Penjualan extends Model
 
     protected $fillable = [
         'user_id',
+        'tanggal_transaksi',
         'total_pembayaran',
         'metode_pembayaran',
         'status',
