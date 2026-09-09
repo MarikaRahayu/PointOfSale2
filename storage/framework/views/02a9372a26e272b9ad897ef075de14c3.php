@@ -157,6 +157,8 @@
         color: var(--blue-dark);
         border: 1px solid #B9E5F7;
         border-radius: 8px;
+        padding: 6px 14px;
+        font-weight: 600;
         transition: all .2s ease;
     }
 
@@ -176,6 +178,8 @@
         color: white;
         border: none;
         border-radius: 8px;
+        padding: 6px 14px;
+        font-weight: 600;
         transition: all .2s ease;
     }
 
@@ -191,6 +195,8 @@
 
     .table {
         margin-bottom: 0;
+        width: 100% !important;
+        table-layout: fixed;
     }
 
     .table thead {
@@ -206,9 +212,9 @@
 
     .table thead th {
         border: none;
-        text-align: center;
         padding: 15px;
         font-weight: 700;
+        vertical-align: middle;
     }
 
     .table tbody tr {
@@ -223,6 +229,7 @@
     .table td {
         vertical-align: middle;
         color: #496B78;
+        padding: 14px 15px;
     }
 
     .table td strong {
@@ -241,10 +248,10 @@
                 #247BA0
             );
 
-        padding: 8px 14px;
+        padding: 6px 14px;
         border-radius: 20px;
         color: white;
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 600;
         display: inline-block;
 
@@ -259,10 +266,10 @@
     .badge-kasir {
         background: #DDF4FC;
         border: 1px solid #B9E5F7;
-        padding: 8px 14px;
+        padding: 6px 14px;
         border-radius: 20px;
         color: var(--blue-dark);
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 600;
         display: inline-block;
     }
@@ -274,10 +281,10 @@
     .badge-other {
         background: #F1F5F7;
         border: 1px solid #D5E3E8;
-        padding: 8px 14px;
+        padding: 6px 14px;
         border-radius: 20px;
         color: #607D87;
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 600;
         display: inline-block;
     }
@@ -442,29 +449,29 @@
 
             <div class="table-responsive">
 
-                <table class="table align-middle table-hover">
+                <table class="table align-middle">
 
                     <thead>
 
                         <tr>
 
-                            <th width="70">
+                            <th style="width: 8%; text-align: center;">
                                 No
                             </th>
 
-                            <th>
+                            <th style="width: 27%; text-align: left;">
                                 Nama
                             </th>
 
-                            <th>
+                            <th style="width: 35%; text-align: left;">
                                 Email
                             </th>
 
-                            <th width="120">
+                            <th style="width: 15%; text-align: center;">
                                 Role
                             </th>
 
-                            <th width="170">
+                            <th style="width: 15%; text-align: center;">
                                 Aksi
                             </th>
 
@@ -491,7 +498,7 @@
 
                                 <!-- NAMA -->
 
-                                <td>
+                                <td class="text-start">
 
                                     <strong>
                                         <?php echo e($user->name); ?>
@@ -503,7 +510,7 @@
 
                                 <!-- EMAIL -->
 
-                                <td>
+                                <td class="text-start">
 
                                     <?php echo e($user->email); ?>
 
@@ -566,38 +573,42 @@
 
                                 <td class="text-center">
 
-                                    <!-- EDIT -->
+                                    <div class="d-flex justify-content-center align-items-center gap-1">
 
-                                    <a
-                                        href="<?php echo e(route('users.edit', $user->id)); ?>"
-                                        class="btn btn-sm btn-edit">
+                                        <!-- EDIT -->
 
-                                        Edit
+                                        <a
+                                            href="<?php echo e(route('users.edit', $user->id)); ?>"
+                                            class="btn btn-sm btn-edit">
 
-                                    </a>
+                                            Edit
+
+                                        </a>
 
 
-                                    <!-- HAPUS -->
+                                        <!-- HAPUS -->
 
-                                    <form
-                                        action="<?php echo e(route('users.destroy', $user->id)); ?>"
-                                        method="POST"
-                                        style="display:inline;">
+                                        <form
+                                            action="<?php echo e(route('users.destroy', $user->id)); ?>"
+                                            method="POST"
+                                            style="display:inline;">
 
-                                        <?php echo csrf_field(); ?>
+                                            <?php echo csrf_field(); ?>
 
-                                        <?php echo method_field('DELETE'); ?>
+                                            <?php echo method_field('DELETE'); ?>
 
-                                        <button
-                                            type="submit"
-                                            onclick="return confirm('Yakin ingin menghapus user ini?')"
-                                            class="btn btn-sm btn-delete">
+                                            <button
+                                                type="submit"
+                                                onclick="return confirm('Yakin ingin menghapus user ini?')"
+                                                class="btn btn-sm btn-delete">
 
-                                            Hapus
+                                                Hapus
 
-                                        </button>
+                                            </button>
 
-                                    </form>
+                                        </form>
+
+                                    </div>
 
                                 </td>
 
