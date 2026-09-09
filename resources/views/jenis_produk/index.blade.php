@@ -1,1372 +1,1539 @@
-@extends('layouts.app')
-
-@section('title', 'Jenis Produk')
-
-@section('content')
-
-<style>
-
-/* =========================================================
-   MODERN BABY BLUE - JENIS PRODUK
-   ========================================================= */
-
-:root {
-    --blue-50: #f4fbff;
-    --blue-100: #e8f7fd;
-    --blue-200: #d4f0fa;
-    --blue-300: #b5e4f5;
-    --blue-400: #89cff0;
-    --blue-500: #5bbce4;
-    --blue-600: #369fca;
-    --blue-700: #247ba0;
-    --blue-800: #155e75;
+<!DOCTYPE html>
+<html lang="id">
 
-    --text-dark: #254b59;
-    --text-muted: #7895a0;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    --danger: #e96f83;
-    --danger-dark: #d95368;
+    <title>Jenis Produk</title>
 
-    --white: #ffffff;
-}
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* =========================================================
-   BODY
-   ========================================================= */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(
+                135deg,
+                #f1fbff,
+                #e5f7fd,
+                #f8fdff
+            );
+            min-height: 100vh;
+            color: #164d63;
+        }
 
-body {
-    min-height: 100vh;
+        /* =========================
+           NAVBAR
+        ========================= */
 
-    background:
-        radial-gradient(
-            circle at 10% 10%,
-            rgba(137, 207, 240, .20),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 90% 20%,
-            rgba(91, 188, 228, .12),
-            transparent 25%
-        ),
-        linear-gradient(
-            135deg,
-            #f8fdff 0%,
-            #edfaff 45%,
-            #f7fcff 100%
-        ) !important;
-}
+        .navbar {
+            width: 100%;
+            min-height: 78px;
 
+            background: linear-gradient(
+                90deg,
+                #70cce9,
+                #49afd6
+            );
 
-/* =========================================================
-   MAIN CONTAINER
-   ========================================================= */
+            display: flex;
+            align-items: center;
 
-.jenis-container {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 45px 22px 60px;
-}
+            padding: 0 22px;
 
+            border-radius: 0 0 18px 18px;
 
-/* =========================================================
-   HEADER
-   ========================================================= */
+            box-shadow:
+                0 5px 15px rgba(58, 160, 200, .20);
 
-.jenis-header {
-    position: relative;
-    margin-bottom: 25px;
-    padding: 5px 0;
-}
+            color: white;
+        }
 
-.jenis-header::before {
-    content: "";
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
 
-    position: absolute;
-    left: 0;
-    top: -10px;
+            font-size: 21px;
+            font-weight: bold;
 
-    width: 55px;
-    height: 5px;
+            margin-right: 25px;
+        }
 
-    border-radius: 20px;
+        .logo-icon {
+            width: 40px;
+            height: 40px;
 
-    background:
-        linear-gradient(
-            90deg,
-            var(--blue-400),
-            var(--blue-600)
-        );
-}
+            background: white;
 
-.jenis-title {
-    margin: 0 0 7px;
+            border-radius: 50%;
 
-    color: var(--blue-800);
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-    font-size: 34px;
-    font-weight: 800;
+            color: #239ac7;
 
-    letter-spacing: -1px;
-}
+            font-size: 19px;
+        }
 
-.jenis-subtitle {
-    margin: 0;
+        .menu {
+            display: flex;
+            align-items: center;
 
-    color: var(--text-muted);
+            gap: 4px;
 
-    font-size: 15px;
-}
+            background: rgba(255, 255, 255, .10);
 
+            border-radius: 14px;
 
-/* =========================================================
-   BUTTON TAMBAH
-   ========================================================= */
+            padding: 5px;
+        }
 
-.btn-tambah-wrapper {
-    display: flex;
-    justify-content: flex-start;
+        .menu a {
+            text-decoration: none;
 
-    margin-bottom: 22px;
-}
+            color: white;
 
-.btn-tambah {
-    position: relative;
+            padding: 13px 15px;
 
-    display: inline-flex;
-    align-items: center;
+            border-radius: 11px;
 
-    gap: 9px;
+            font-size: 13px;
+            font-weight: 600;
 
-    padding: 12px 20px;
+            display: flex;
+            align-items: center;
 
-    color: white;
+            gap: 7px;
 
-    text-decoration: none;
+            transition: .2s;
+        }
 
-    border: none;
-    border-radius: 13px;
+        .menu a:hover {
+            background: rgba(255, 255, 255, .18);
+        }
 
-    font-size: 14px;
-    font-weight: 700;
+        .menu a.active {
+            background: white;
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--blue-400),
-            var(--blue-600)
-        );
+            color: #1676a3;
 
-    box-shadow:
-        0 8px 20px rgba(91, 188, 228, .25);
+            box-shadow:
+                0 4px 10px rgba(0, 0, 0, .08);
+        }
 
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease,
-        background .25s ease;
-}
+        .navbar-right {
+            margin-left: auto;
 
-.btn-tambah i {
-    font-size: 17px;
-}
+            display: flex;
+            align-items: center;
 
-.btn-tambah:hover {
-    color: white;
+            gap: 14px;
+        }
 
-    transform: translateY(-3px);
+        .login-info {
+            background: rgba(255, 255, 255, .18);
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--blue-500),
-            var(--blue-700)
-        );
+            padding: 9px 15px;
 
-    box-shadow:
-        0 12px 25px rgba(36, 123, 160, .25);
-}
+            border-radius: 12px;
 
+            display: flex;
+            align-items: center;
 
-/* =========================================================
-   MAIN CARD
-   ========================================================= */
+            gap: 9px;
 
-.jenis-card {
-    position: relative;
+            font-size: 11px;
+        }
 
-    overflow: hidden;
+        .login-info i {
+            width: 30px;
+            height: 30px;
 
-    background: rgba(255, 255, 255, .95);
+            background: white;
 
-    border:
-        1px solid rgba(181, 228, 245, .75);
+            color: #1680ad;
 
-    border-radius: 22px;
+            border-radius: 50%;
 
-    box-shadow:
-        0 18px 50px rgba(36, 123, 160, .10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-    animation: jenisFade .5s ease;
-}
+            font-size: 14px;
+        }
 
+        .login-info strong {
+            display: block;
 
-/* =========================================================
-   CARD HEADER
-   ========================================================= */
+            font-size: 11px;
+        }
 
-.jenis-card-header {
-    position: relative;
+        .logout {
+            border: none;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+            background: white;
 
-    gap: 15px;
+            color: #1473a0;
 
-    padding: 25px 28px;
+            padding: 12px 18px;
 
-    color: white;
+            border-radius: 10px;
 
-    background:
-        linear-gradient(
-            120deg,
-            #89cff0 0%,
-            #5bbce4 55%,
-            #43abd4 100%
-        );
+            font-weight: bold;
 
-    overflow: hidden;
-}
+            cursor: pointer;
 
-.jenis-card-header::after {
-    content: "";
+            display: flex;
+            align-items: center;
 
-    position: absolute;
+            gap: 7px;
+        }
 
-    width: 180px;
-    height: 180px;
+        /* =========================
+           CONTAINER
+        ========================= */
 
-    right: -60px;
-    top: -100px;
+        .container {
+            width: 1000px;
 
-    border-radius: 50%;
+            max-width: calc(100% - 40px);
 
-    background: rgba(255,255,255,.12);
-}
+            margin: 20px auto 50px;
+        }
 
-.jenis-card-header h4 {
-    position: relative;
-    z-index: 2;
+        .page-title {
+            margin-bottom: 25px;
+        }
 
-    display: flex;
-    align-items: center;
+        .page-title h1 {
+            font-size: 29px;
 
-    gap: 10px;
+            color: #145a73;
 
-    margin: 0;
+            font-weight: 800;
 
-    font-size: 18px;
-    font-weight: 700;
-}
+            margin-bottom: 7px;
+        }
 
-.jenis-card-header h4 i {
-    font-size: 20px;
-}
+        .page-title p {
+            color: #6a99aa;
 
-.jenis-card-header p {
-    position: relative;
-    z-index: 2;
+            font-size: 14px;
+        }
 
-    margin: 0;
+        /* =========================
+           BUTTON TAMBAH
+        ========================= */
 
-    padding: 7px 14px;
+        .btn-tambah {
+            display: inline-flex;
 
-    color: white;
+            align-items: center;
 
-    font-size: 13px;
-    font-weight: 600;
+            gap: 9px;
 
-    border:
-        1px solid rgba(255,255,255,.25);
+            padding: 13px 19px;
 
-    border-radius: 30px;
+            border: none;
 
-    background: rgba(255,255,255,.18);
+            border-radius: 12px;
 
-    backdrop-filter: blur(8px);
-}
+            background: linear-gradient(
+                135deg,
+                #65c5e8,
+                #369dca
+            );
 
+            color: white;
 
-/* =========================================================
-   CARD BODY
-   ========================================================= */
+            font-size: 13px;
 
-.jenis-card-body {
-    padding: 28px;
-}
+            font-weight: bold;
 
+            cursor: pointer;
 
-/* =========================================================
-   SEARCH AREA
-   ========================================================= */
+            box-shadow:
+                0 7px 16px rgba(51, 162, 204, .20);
 
-.search-box {
-    display: flex;
-    align-items: center;
+            margin-bottom: 20px;
 
-    gap: 10px;
+            transition: .2s;
+        }
 
-    margin-bottom: 25px;
-}
+        .btn-tambah:hover {
+            transform: translateY(-2px);
 
-.search-input-wrapper {
-    position: relative;
+            box-shadow:
+                0 9px 18px rgba(51, 162, 204, .28);
+        }
 
-    max-width: 450px;
+        /* =========================
+           CARD
+        ========================= */
 
-    flex: 1;
-}
+        .card {
+            background: white;
 
-.search-input-wrapper i {
-    position: absolute;
+            border-radius: 19px;
 
-    left: 15px;
-    top: 50%;
+            overflow: hidden;
 
-    color: var(--blue-500);
+            border: 1px solid #d2edf7;
 
-    font-size: 16px;
+            box-shadow:
+                0 12px 30px rgba(50, 153, 190, .10);
+        }
 
-    transform: translateY(-50%);
+        .card-header {
+            height: 73px;
 
-    pointer-events: none;
-}
+            padding: 0 25px;
 
-.search-box input {
-    width: 100%;
+            background: linear-gradient(
+                90deg,
+                #72c9e8,
+                #49afd5
+            );
 
-    padding: 12px 16px 12px 42px;
+            color: white;
 
-    color: var(--text-dark);
+            display: flex;
 
-    border:
-        1.5px solid var(--blue-300);
+            align-items: center;
 
-    border-radius: 13px;
+            justify-content: space-between;
+        }
 
-    background: #fbfeff;
+        .card-title {
+            font-size: 16px;
 
-    outline: none;
+            font-weight: bold;
 
-    transition:
-        border-color .25s ease,
-        box-shadow .25s ease,
-        background .25s ease;
-}
+            display: flex;
 
-.search-box input::placeholder {
-    color: #9ab7c1;
-}
+            align-items: center;
 
-.search-box input:focus {
-    background: white;
+            gap: 10px;
+        }
 
-    border-color: var(--blue-500);
+        .total {
+            padding: 8px 14px;
 
-    box-shadow:
-        0 0 0 4px rgba(91,188,228,.12);
-}
+            border-radius: 20px;
 
+            background: rgba(255, 255, 255, .17);
 
-/* =========================================================
-   BUTTON CARI
-   ========================================================= */
+            border: 1px solid rgba(255, 255, 255, .28);
 
-.btn-cari {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+            font-size: 11px;
 
-    gap: 7px;
+            font-weight: bold;
+        }
 
-    padding: 11px 20px;
+        .card-body {
+            padding: 24px;
+        }
 
-    color: var(--blue-700);
+        /* =========================
+           ALERT
+        ========================= */
 
-    border:
-        1.5px solid var(--blue-400);
+        .alert {
+            padding: 13px 16px;
 
-    border-radius: 12px;
+            border-radius: 10px;
 
-    background: white;
+            margin-bottom: 18px;
 
-    font-size: 14px;
-    font-weight: 700;
+            font-size: 13px;
 
-    transition: all .25s ease;
-}
+            font-weight: 600;
+        }
 
-.btn-cari:hover {
-    color: white;
+        .alert-success {
+            background: #e5f9ef;
 
-    border-color: var(--blue-500);
+            color: #198754;
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--blue-400),
-            var(--blue-600)
-        );
+            border: 1px solid #bcebd0;
+        }
 
-    transform: translateY(-2px);
+        .alert-error {
+            background: #fff0f2;
 
-    box-shadow:
-        0 7px 17px rgba(91,188,228,.22);
-}
+            color: #dc5368;
 
+            border: 1px solid #ffd0d7;
+        }
 
-/* =========================================================
-   TABLE WRAPPER
-   ========================================================= */
+        /* =========================
+           SEARCH
+        ========================= */
 
-.table-responsive {
-    border-radius: 15px;
+        .search-box {
+            display: flex;
 
-    overflow-x: auto;
-    overflow-y: hidden;
+            gap: 8px;
 
-    border:
-        1px solid #e3f3f8;
-}
+            margin-bottom: 21px;
+        }
 
+        .search-input {
+            flex: 1;
 
-/* =========================================================
-   TABLE
-   ========================================================= */
+            height: 42px;
 
-.table {
-    width: 100%;
+            border: 1px solid #b9e5f5;
 
-    min-width: 850px;
+            border-radius: 10px;
 
-    margin-bottom: 0;
+            padding: 0 14px;
 
-    border-collapse: separate;
-    border-spacing: 0;
-}
+            outline: none;
 
+            color: #23657b;
 
-/* =========================================================
-   TABLE HEADER
-   ========================================================= */
+            font-size: 13px;
+        }
 
-.table thead th {
-    padding: 15px 17px;
+        .search-input:focus {
+            border-color: #4db4dc;
 
-    color: var(--blue-700);
+            box-shadow:
+                0 0 0 3px rgba(77, 180, 220, .10);
+        }
 
-    background:
-        linear-gradient(
-            180deg,
-            #edfaff,
-            #e8f7fd
-        );
+        .btn-search {
+            height: 42px;
 
-    border: none;
+            padding: 0 17px;
 
-    font-size: 12px;
-    font-weight: 800;
+            border: 1px solid #8bd2eb;
 
-    text-transform: uppercase;
+            background: white;
 
-    letter-spacing: .6px;
-}
+            color: #167da7;
 
+            border-radius: 10px;
 
-/* =========================================================
-   TABLE BODY
-   ========================================================= */
+            cursor: pointer;
 
-.table tbody td {
-    padding: 17px;
+            font-weight: bold;
 
-    vertical-align: middle;
+            display: flex;
 
-    color: #526f79;
+            align-items: center;
 
-    background: white;
+            gap: 7px;
+        }
 
-    border-bottom:
-        1px solid #e9f5f8;
-}
+        .btn-search:hover {
+            background: #eefaff;
+        }
 
-.table tbody tr {
-    transition:
-        background .2s ease,
-        transform .2s ease;
-}
+        /* =========================
+           TABLE
+        ========================= */
 
-.table tbody tr:hover td {
-    background: #f5fcff;
-}
+        .table-wrapper {
+            overflow-x: auto;
 
-.table tbody tr:last-child td {
-    border-bottom: none;
-}
+            border: 1px solid #d8edf5;
 
+            border-radius: 13px;
+        }
 
-/* =========================================================
-   NUMBER BADGE
-   ========================================================= */
+        table {
+            width: 100%;
 
-.badge-nomor {
-    display: inline-flex;
+            border-collapse: collapse;
 
-    align-items: center;
-    justify-content: center;
+            min-width: 800px;
+        }
 
-    width: 35px;
-    height: 35px;
+        thead {
+            background: #e9f8fd;
+        }
 
-    color: var(--blue-700);
+        th {
+            text-align: left;
 
-    border:
-        1px solid var(--blue-300);
+            padding: 14px;
 
-    border-radius: 50%;
+            font-size: 11px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #eaf8fd,
-            #dff5fc
-        );
+            color: #177496;
 
-    font-size: 13px;
-    font-weight: 800;
+            font-weight: 800;
 
-    box-shadow:
-        inset 0 1px 2px rgba(255,255,255,.7);
-}
+            text-transform: uppercase;
+        }
 
+        td {
+            padding: 13px 14px;
 
-/* =========================================================
-   USER
-   ========================================================= */
+            border-top: 1px solid #e7f3f7;
 
-.nama-user {
-    display: inline-flex;
+            font-size: 12px;
 
-    align-items: center;
+            font-weight: 600;
 
-    color: #315f70;
+            color: #315f70;
+        }
 
-    font-size: 14px;
-    font-weight: 700;
-}
+        tbody tr:hover {
+            background: #f7fcfe;
+        }
 
-.nama-user i {
-    display: inline-flex;
+        /* =========================
+           NOMOR
+        ========================= */
 
-    align-items: center;
-    justify-content: center;
+        .number {
+            width: 55px;
+        }
 
-    width: 30px;
-    height: 30px;
+        .number span {
+            width: 31px;
 
-    margin-right: 10px;
+            height: 31px;
 
-    color: var(--blue-600);
+            display: flex;
 
-    border-radius: 9px;
+            align-items: center;
 
-    background: var(--blue-100);
-}
+            justify-content: center;
 
+            border-radius: 50%;
 
-/* =========================================================
-   NAMA JENIS
-   ========================================================= */
+            background: #ecf9fd;
 
-.nama-jenis {
-    display: inline-flex;
+            border: 1px solid #bce5f3;
 
-    align-items: center;
+            color: #1680a9;
 
-    color: #315f70;
+            font-size: 12px;
+        }
 
-    font-size: 14px;
-    font-weight: 700;
-}
+        /* =========================
+           USER
+        ========================= */
 
-.nama-jenis i {
-    display: inline-flex;
+        .user-name {
+            display: flex;
 
-    align-items: center;
-    justify-content: center;
+            align-items: center;
 
-    width: 30px;
-    height: 30px;
+            gap: 8px;
 
-    margin-right: 10px;
+            white-space: nowrap;
+        }
 
-    color: var(--blue-600) !important;
+        .user-icon {
+            width: 30px;
 
-    border-radius: 9px;
+            height: 30px;
 
-    background: var(--blue-100);
-}
+            display: flex;
 
+            align-items: center;
 
-/* =========================================================
-   JUMLAH PRODUK
-   ========================================================= */
+            justify-content: center;
 
-.badge-jumlah {
-    display: inline-flex;
+            background: #e9f7fc;
 
-    align-items: center;
+            border-radius: 8px;
 
-    gap: 5px;
+            color: #38a5cf;
 
-    padding: 7px 12px;
+            flex-shrink: 0;
+        }
 
-    color: var(--blue-700);
+        .user-name strong {
+            color: #315f70;
 
-    border:
-        1px solid var(--blue-300);
+            font-size: 12px;
+        }
 
-    border-radius: 30px;
+        /* =========================
+           NAMA JENIS
+        ========================= */
 
-    background:
-        linear-gradient(
-            135deg,
-            #f0fbff,
-            #e4f7fc
-        );
+        .name {
+            display: flex;
 
-    font-size: 12.5px;
-    font-weight: 700;
-}
+            align-items: center;
 
-.badge-jumlah i {
-    color: var(--blue-500);
-}
+            gap: 10px;
+        }
 
+        .name-icon {
+            width: 28px;
 
-/* =========================================================
-   ACTION BUTTON
-   ========================================================= */
+            height: 28px;
 
-.btn-edit,
-.btn-hapus {
-    display: inline-flex;
+            display: flex;
 
-    align-items: center;
-    justify-content: center;
+            align-items: center;
 
-    gap: 6px;
+            justify-content: center;
 
-    padding: 7px 12px;
+            background: #e9f7fc;
 
-    border-radius: 9px;
+            border-radius: 8px;
 
-    font-size: 12.5px;
-    font-weight: 700;
+            color: #38a5cf;
+        }
 
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease,
-        background .2s ease;
-}
+        /* =========================
+           JUMLAH
+        ========================= */
 
+        .jumlah {
+            display: inline-flex;
 
-/* =========================================================
-   EDIT
-   ========================================================= */
+            align-items: center;
 
-.btn-edit {
-    color: var(--blue-700);
+            gap: 7px;
 
-    border:
-        1px solid var(--blue-300);
+            border: 1px solid #a9def0;
 
-    background: #eaf8fd;
+            background: #effaff;
 
-    text-decoration: none;
-}
+            color: #1680a9;
 
-.btn-edit:hover {
-    color: white;
+            border-radius: 20px;
 
-    background: var(--blue-500);
+            padding: 7px 11px;
 
-    border-color: var(--blue-500);
+            font-size: 11px;
+        }
 
-    transform: translateY(-2px);
+        /* =========================
+           AKSI
+        ========================= */
 
-    box-shadow:
-        0 5px 12px rgba(91,188,228,.22);
-}
+        .actions {
+            display: flex;
 
+            gap: 5px;
+        }
 
-/* =========================================================
-   HAPUS
-   ========================================================= */
+        .btn-edit,
+        .btn-hapus {
+            border: none;
 
-.btn-hapus {
-    color: white;
+            padding: 8px 11px;
 
-    border: none;
+            border-radius: 8px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #ef8798,
-            #e56f82
-        );
-}
+            font-size: 11px;
 
-.btn-hapus:hover {
-    color: white;
+            font-weight: bold;
 
-    background:
-        linear-gradient(
-            135deg,
-            #e56f82,
-            #d65368
-        );
+            cursor: pointer;
 
-    transform: translateY(-2px);
+            text-decoration: none;
 
-    box-shadow:
-        0 5px 12px rgba(229,111,130,.22);
-}
+            display: inline-flex;
 
+            align-items: center;
 
-/* =========================================================
-   ALERT
-   ========================================================= */
+            gap: 5px;
+        }
 
-.alert {
-    display: flex;
-    align-items: center;
+        .btn-edit {
+            background: #effaff;
 
-    padding: 14px 18px;
+            color: #1480a8;
 
-    margin-bottom: 20px;
+            border: 1px solid #b7e4f3;
+        }
 
-    border-radius: 13px;
+        .btn-hapus {
+            background: #ed7186;
 
-    font-size: 14px;
-    font-weight: 600;
-}
+            color: white;
+        }
 
-.alert-success {
-    color: #167457;
+        .btn-edit:hover {
+            background: #dff6fc;
+        }
 
-    background: #e8faf3;
+        .btn-hapus:hover {
+            background: #df5b71;
+        }
 
-    border:
-        1px solid #b9ead8;
-}
+        /* =========================
+           MODAL
+        ========================= */
 
-.alert-danger {
-    color: #b33e51;
+        .modal-overlay {
+            position: fixed;
 
-    background: #fff1f3;
+            inset: 0;
 
-    border:
-        1px solid #f2c3cb;
-}
+            background: rgba(20, 75, 94, .30);
 
+            display: none;
 
-/* =========================================================
-   EMPTY STATE
-   ========================================================= */
+            align-items: center;
 
-.empty-state {
-    padding: 65px 20px !important;
+            justify-content: center;
 
-    color: var(--text-muted);
-}
+            z-index: 9999;
 
-.empty-state-icon {
-    display: flex;
+            padding: 20px;
+        }
 
-    align-items: center;
-    justify-content: center;
+        .modal-overlay.active {
+            display: flex;
+        }
 
-    width: 75px;
-    height: 75px;
+        .modal-box {
+            width: 440px;
 
-    margin: 0 auto;
+            max-width: 100%;
 
-    color: var(--blue-500);
+            background: white;
 
-    border-radius: 22px;
+            border-radius: 18px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #eaf8fd,
-            #dff5fc
-        );
+            overflow: hidden;
 
-    font-size: 34px;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, .18);
 
-    box-shadow:
-        0 8px 20px rgba(91,188,228,.10);
-}
+            animation: modalShow .2s ease;
+        }
 
-.empty-state p {
-    color: #7895a0;
+        @keyframes modalShow {
 
-    font-size: 14px;
-}
+            from {
+                opacity: 0;
 
+                transform: translateY(-15px) scale(.98);
+            }
 
-/* =========================================================
-   PAGINATION
-   ========================================================= */
+            to {
+                opacity: 1;
 
-.pagination {
-    justify-content: flex-end;
+                transform: translateY(0) scale(1);
+            }
+        }
 
-    margin-top: 25px;
+        .modal-header {
+            background: linear-gradient(
+                90deg,
+                #72c9e8,
+                #49afd5
+            );
 
-    gap: 4px;
-}
+            color: white;
 
-.pagination .page-link {
-    min-width: 35px;
+            padding: 20px 23px;
 
-    text-align: center;
+            display: flex;
 
-    color: var(--blue-700);
+            align-items: center;
 
-    border:
-        1px solid var(--blue-300);
+            justify-content: space-between;
+        }
 
-    border-radius: 9px !important;
+        .modal-header h3 {
+            font-size: 16px;
 
-    background: white;
+            display: flex;
 
-    transition: all .2s ease;
-}
+            align-items: center;
 
-.pagination .page-link:hover {
-    color: white;
+            gap: 9px;
+        }
 
-    background: var(--blue-500);
+        .btn-close {
+            border: none;
 
-    border-color: var(--blue-500);
+            background: transparent;
 
-    transform: translateY(-1px);
-}
+            color: white;
 
-.pagination .active .page-link {
-    color: white;
+            font-size: 25px;
 
-    border-color: var(--blue-500);
+            cursor: pointer;
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--blue-400),
-            var(--blue-600)
-        );
+            width: 32px;
 
-    box-shadow:
-        0 4px 10px rgba(91,188,228,.20);
-}
+            height: 32px;
 
+            border-radius: 50%;
+        }
 
-/* =========================================================
-   ANIMATION
-   ========================================================= */
+        .btn-close:hover {
+            background: rgba(255, 255, 255, .15);
+        }
 
-@keyframes jenisFade {
+        .modal-body {
+            padding: 25px;
+        }
 
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
+        .form-group {
+            margin-bottom: 5px;
+        }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+        .form-group label {
+            display: block;
 
-}
+            color: #315f70;
 
+            font-size: 13px;
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
+            font-weight: bold;
 
-@media(max-width: 768px) {
+            margin-bottom: 9px;
+        }
 
-    .jenis-container {
-        margin: 0 auto;
+        .form-group input {
+            width: 100%;
 
-        padding:
-            30px 15px 45px;
-    }
+            height: 44px;
 
-    .jenis-title {
-        font-size: 27px;
-    }
+            border: 1px solid #b9e3f1;
 
-    .jenis-subtitle {
-        font-size: 13.5px;
-    }
+            border-radius: 10px;
 
-    .btn-tambah-wrapper {
-        width: 100%;
-    }
+            outline: none;
 
-    .btn-tambah {
-        width: 100%;
+            padding: 0 14px;
 
-        justify-content: center;
-    }
+            color: #315f70;
 
-    .jenis-card-header {
-        flex-direction: column;
+            font-size: 13px;
+        }
 
-        align-items: flex-start;
+        .form-group input:focus {
+            border-color: #49afd5;
 
-        padding: 20px;
-    }
+            box-shadow:
+                0 0 0 3px rgba(73, 175, 213, .10);
+        }
 
-    .jenis-card-header p {
-        font-size: 12px;
-    }
+        .error {
+            display: block;
 
-    .jenis-card-body {
-        padding: 18px;
-    }
+            margin-top: 7px;
 
-    .search-box {
-        flex-direction: column;
+            color: #dc5368;
 
-        align-items: stretch;
-    }
+            font-size: 11px;
+        }
 
-    .search-input-wrapper {
-        max-width: 100%;
-    }
+        .modal-footer {
+            padding: 0 25px 24px;
 
-    .btn-cari {
-        width: 100%;
-    }
+            display: flex;
 
-    .table-responsive {
-        border-radius: 12px;
-    }
+            justify-content: flex-end;
 
-    .table {
-        min-width: 850px;
-    }
+            gap: 8px;
+        }
 
-    .pagination {
-        justify-content: center;
-    }
+        .btn-batal,
+        .btn-simpan {
+            border: none;
 
-}
+            padding: 11px 17px;
 
+            border-radius: 9px;
 
-/* =========================================================
-   EXTRA SMALL
-   ========================================================= */
+            cursor: pointer;
 
-@media(max-width: 480px) {
+            font-size: 12px;
 
-    .jenis-title {
-        font-size: 24px;
-    }
+            font-weight: bold;
+        }
 
-    .jenis-card-header h4 {
-        font-size: 16px;
-    }
+        .btn-batal {
+            background: #eef1f2;
 
-    .jenis-card-body {
-        padding: 15px;
-    }
+            color: #64777e;
+        }
 
-}
+        .btn-simpan {
+            background: linear-gradient(
+                135deg,
+                #65c5e8,
+                #369dca
+            );
 
-</style>
+            color: white;
+        }
 
+        /* =========================
+           EMPTY
+        ========================= */
 
-<div class="jenis-container">
+        .empty {
+            text-align: center;
 
-    {{-- =====================================================
-         HEADER
-    ====================================================== --}}
+            padding: 40px;
 
-    <div class="jenis-header">
+            color: #8aabb7;
 
-        <h1 class="jenis-title">
-            Jenis Produk
-        </h1>
+            font-size: 13px;
+        }
 
-        <p class="jenis-subtitle">
-            Kelola kategori dan jenis produk toko
-        </p>
+        .empty i {
+            display: block;
 
-    </div>
+            font-size: 35px;
 
+            margin-bottom: 10px;
 
-    {{-- =====================================================
-         ALERT SUCCESS
-    ====================================================== --}}
+            color: #a8ddec;
+        }
 
-    @if(session('success'))
+        /* =========================
+           RESPONSIVE
+        ========================= */
 
-        <div class="alert alert-success">
+        @media (max-width: 900px) {
 
-            <i class="bi bi-check-circle-fill me-2"></i>
+            .navbar {
+                height: auto;
 
-            {{ session('success') }}
+                padding: 12px;
 
-        </div>
+                flex-wrap: wrap;
 
-    @endif
+                gap: 10px;
+            }
 
+            .logo {
+                margin-right: 0;
+            }
 
-    {{-- =====================================================
-         ALERT ERROR
-    ====================================================== --}}
+            .menu {
+                order: 3;
 
-    @if(session('error'))
+                width: 100%;
 
-        <div class="alert alert-danger">
+                overflow-x: auto;
+            }
 
-            <i class="bi bi-exclamation-circle-fill me-2"></i>
+            .navbar-right {
+                margin-left: auto;
+            }
 
-            {{ session('error') }}
+            .container {
+                width: 100%;
+            }
+        }
 
-        </div>
+        @media (max-width: 600px) {
 
-    @endif
+            .navbar-right {
+                width: 100%;
 
+                justify-content: space-between;
+            }
 
-    {{-- =====================================================
-         BUTTON TAMBAH
-    ====================================================== --}}
+            .login-info {
+                flex: 1;
+            }
 
-    <div class="btn-tambah-wrapper">
+            .page-title h1 {
+                font-size: 25px;
+            }
 
-        <a
-            href="{{ route('jenis-produk.create') }}"
-            class="btn-tambah"
-        >
+            .card-body {
+                padding: 15px;
+            }
 
-            <i class="bi bi-plus-lg"></i>
+            .card-header {
+                padding: 0 15px;
+            }
+        }
+    </style>
 
-            Tambah Jenis Produk
+</head>
 
-        </a>
+<body>
 
-    </div>
+    <!-- =========================
+         NAVBAR
+    ========================= -->
 
+    <nav class="navbar">
 
-    {{-- =====================================================
-         MAIN CARD
-    ====================================================== --}}
+        <div class="logo">
 
-    <div class="jenis-card">
+            <div class="logo-icon">
+                <i class="fas fa-store"></i>
+            </div>
 
-
-        {{-- =================================================
-             CARD HEADER
-        ================================================== --}}
-
-        <div class="jenis-card-header">
-
-            <h4>
-
-                <i class="bi bi-tags-fill"></i>
-
-                Daftar Jenis Produk
-
-            </h4>
-
-            <p>
-
-                <i class="bi bi-layers-fill me-1"></i>
-
-                Total {{ $totalJenis }} Jenis
-
-            </p>
+            POS
 
         </div>
 
 
-        {{-- =================================================
-             CARD BODY
-        ================================================== --}}
+        <div class="menu">
 
-        <div class="jenis-card-body">
+            <!-- Dashboard -->
+            <a href="{{ route('dashboard') }}">
+                <i class="fas fa-home"></i>
+                Dashboard
+            </a>
+
+            <!-- User -->
+            <a href="{{ route('users.index') }}">
+                <i class="fas fa-users"></i>
+                User
+            </a>
+
+            <!-- Jenis Produk -->
+            <a href="{{ route('jenis-produk.index') }}"
+                class="active">
+
+                <i class="fas fa-tag"></i>
+
+                Jenis Produk
+
+            </a>
+
+            <!-- Produk -->
+            <a href="{{ route('produk.index') }}">
+                <i class="fas fa-box"></i>
+                Produk
+            </a>
+
+            <!-- Penjualan -->
+            <a href="{{ route('penjualan.index') }}">
+                <i class="fas fa-cart-shopping"></i>
+                Penjualan
+            </a>
+
+            <!-- Tentang -->
+            <a href="{{ route('tentang') }}">
+                <i class="fas fa-circle-info"></i>
+                Tentang
+            </a>
+
+        </div>
 
 
-            {{-- =================================================
-                 SEARCH
-            ================================================== --}}
+        <div class="navbar-right">
 
-            <form
-                action="{{ route('jenis-produk.index') }}"
-                method="GET"
-                class="search-box"
-            >
+            <div class="login-info">
 
-                <div class="search-input-wrapper">
+                <i class="fas fa-user"></i>
 
-                    <i class="bi bi-search"></i>
+                <div>
 
-                    <input
-                        type="text"
-                        name="search"
-                        value="{{ request('search') }}"
-                        class="form-control"
-                        placeholder="Cari nama jenis produk..."
-                    >
+                    <span>Login sebagai</span>
+
+                    <strong>
+                        {{ auth()->user()->name ?? 'User' }}
+                    </strong>
 
                 </div>
 
+            </div>
 
-                <button
-                    type="submit"
-                    class="btn-cari"
-                >
 
-                    <i class="bi bi-search"></i>
+            <form action="{{ route('logout') }}"
+                method="POST">
 
-                    Cari
+                @csrf
+
+                <button type="submit"
+                    class="logout">
+
+                    <i class="fas fa-right-from-bracket"></i>
+
+                    Logout
 
                 </button>
 
             </form>
 
+        </div>
 
-            {{-- =================================================
-                 TABLE
-            ================================================== --}}
+    </nav>
 
-            <div class="table-responsive">
 
-                <table class="table">
+    <!-- =========================
+         CONTAINER
+    ========================= -->
 
-                    <thead>
+    <div class="container">
 
-                        <tr>
+        <div class="page-title">
 
-                            {{-- NO --}}
-                            <th style="width: 80px;">
-                                No
-                            </th>
+            <h1>
+                Jenis Produk
+            </h1>
 
-                            {{-- USER --}}
-                            <th style="width: 200px;">
-                                User
-                            </th>
+            <p>
+                Kelola kategori dan jenis produk toko
+            </p>
 
-                            {{-- NAMA --}}
-                            <th>
-                                Nama Jenis Produk
-                            </th>
+        </div>
 
-                            {{-- JUMLAH --}}
-                            <th style="width: 190px;">
-                                Jumlah Produk
-                            </th>
 
-                            {{-- AKSI --}}
-                            <th style="width: 190px;">
-                                Aksi
-                            </th>
+        <!-- BUTTON TAMBAH -->
 
-                        </tr>
+        <button type="button"
+            class="btn-tambah"
+            onclick="openModal()">
 
-                    </thead>
+            <i class="fas fa-plus"></i>
 
+            Tambah Jenis Produk
 
-                    <tbody>
+        </button>
 
-                        @forelse($jenisProduk as $item)
 
-                            <tr>
+        <!-- CARD -->
 
+        <div class="card">
 
-                                {{-- =================================================
-                                     NOMOR
-                                ================================================== --}}
+            <div class="card-header">
 
-                                <td>
+                <div class="card-title">
 
-                                    <span class="badge-nomor">
+                    <i class="fas fa-tags"></i>
 
-                                        {{ $jenisProduk->firstItem() + $loop->index }}
+                    Daftar Jenis Produk
 
-                                    </span>
+                </div>
 
-                                </td>
 
+                <div class="total">
 
-                                {{-- =================================================
-                                     USER
-                                ================================================== --}}
+                    <i class="fas fa-layer-group"></i>
 
-                                <td>
+                    Total {{ $jenisProduk->count() }} Jenis
 
-                                    <span class="nama-user">
-
-                                        <i class="bi bi-person-fill"></i>
-
-                                        {{ $item->user->name ?? '-' }}
-
-                                    </span>
-
-                                </td>
-
-
-                                {{-- =================================================
-                                     NAMA JENIS
-                                ================================================== --}}
-
-                                <td>
-
-                                    <span class="nama-jenis">
-
-                                        <i class="bi bi-tag-fill"></i>
-
-                                        {{ $item->nama }}
-
-                                    </span>
-
-                                </td>
-
-
-                                {{-- =================================================
-                                     JUMLAH PRODUK
-                                ================================================== --}}
-
-                                <td>
-
-                                    <span class="badge-jumlah">
-
-                                        <i class="bi bi-box-seam"></i>
-
-                                        {{ $item->produk_count }}
-
-                                        Produk
-
-                                    </span>
-
-                                </td>
-
-
-                                {{-- =================================================
-                                     AKSI
-                                ================================================== --}}
-
-                                <td>
-
-                                    <a
-                                        href="{{ route('jenis-produk.edit', $item->id) }}"
-                                        class="btn-edit"
-                                    >
-
-                                        <i class="bi bi-pencil-fill"></i>
-
-                                        Edit
-
-                                    </a>
-
-
-                                    <form
-                                        action="{{ route('jenis-produk.destroy', $item->id) }}"
-                                        method="POST"
-                                        class="d-inline"
-                                        onsubmit="return confirm('Yakin ingin menghapus jenis produk ini?')"
-                                    >
-
-                                        @csrf
-
-                                        @method('DELETE')
-
-
-                                        <button
-                                            type="submit"
-                                            class="btn-hapus"
-                                        >
-
-                                            <i class="bi bi-trash-fill"></i>
-
-                                            Hapus
-
-                                        </button>
-
-                                    </form>
-
-                                </td>
-
-                            </tr>
-
-
-                        @empty
-
-
-                            {{-- =================================================
-                                 EMPTY STATE
-                            ================================================== --}}
-
-                            <tr>
-
-                                <td
-                                    colspan="5"
-                                    class="text-center empty-state"
-                                >
-
-                                    <div class="empty-state-icon">
-
-                                        <i class="bi bi-tags"></i>
-
-                                    </div>
-
-                                    <p class="mt-3 mb-0">
-
-                                        Belum ada jenis produk.
-
-                                    </p>
-
-                                </td>
-
-                            </tr>
-
-
-                        @endforelse
-
-                    </tbody>
-
-                </table>
+                </div>
 
             </div>
 
 
-            {{-- =================================================
-                 PAGINATION
-            ================================================== --}}
+            <div class="card-body">
 
-            {{ $jenisProduk->links() }}
+                <!-- SUCCESS -->
 
+                @if(session('success'))
+
+                    <div class="alert alert-success">
+
+                        <i class="fas fa-circle-check"></i>
+
+                        {{ session('success') }}
+
+                    </div>
+
+                @endif
+
+
+                <!-- ERROR -->
+
+                @if(session('error'))
+
+                    <div class="alert alert-error">
+
+                        <i class="fas fa-circle-exclamation"></i>
+
+                        {{ session('error') }}
+
+                    </div>
+
+                @endif
+
+
+                <!-- SEARCH -->
+
+                <form action="{{ route('jenis-produk.index') }}"
+                    method="GET"
+                    class="search-box">
+
+                    <input
+                        type="text"
+                        name="search"
+                        class="search-input"
+                        placeholder="Cari nama jenis produk..."
+                        value="{{ request('search') }}">
+
+                    <button type="submit"
+                        class="btn-search">
+
+                        <i class="fas fa-search"></i>
+
+                        Cari
+
+                    </button>
+
+                </form>
+
+
+                <!-- TABLE -->
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th class="number">
+                                    No
+                                </th>
+
+                                <th>
+                                    User
+                                </th>
+
+                                <th>
+                                    Nama Jenis Produk
+                                </th>
+
+                                <th>
+                                    Jumlah Produk
+                                </th>
+
+                                <th>
+                                    Aksi
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            @forelse($jenisProduk as $index => $jenis)
+
+                                <tr>
+
+                                    <!-- NO -->
+
+                                    <td class="number">
+
+                                        <span>
+                                            {{ $index + 1 }}
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- USER -->
+
+                                    <td>
+
+                                        <div class="user-name">
+
+                                            <div class="user-icon">
+
+                                                <i class="fas fa-user"></i>
+
+                                            </div>
+
+                                            <strong>
+
+                                                {{ $jenis->user->name ?? 'Marika Rahayu' }}
+
+                                            </strong>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- NAMA JENIS PRODUK -->
+
+                                    <td>
+
+                                        <div class="name">
+
+                                            <div class="name-icon">
+
+                                                <i class="fas fa-tag"></i>
+
+                                            </div>
+
+                                            {{ $jenis->nama }}
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- JUMLAH PRODUK -->
+
+                                    <td>
+
+                                        <span class="jumlah">
+
+                                            <i class="fas fa-box"></i>
+
+                                            {{ $jenis->produk_count }}
+
+                                            Produk
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- AKSI -->
+
+                                    <td>
+
+                                        <div class="actions">
+
+                                            <!-- EDIT -->
+
+                                            <a href="{{ route('jenis-produk.edit', $jenis->id) }}"
+                                                class="btn-edit">
+
+                                                <i class="fas fa-pen"></i>
+
+                                                Edit
+
+                                            </a>
+
+
+                                            <!-- HAPUS -->
+
+                                            <form
+                                                action="{{ route('jenis-produk.destroy', $jenis->id) }}"
+                                                method="POST"
+                                                onsubmit="return confirm('Apakah kamu yakin ingin menghapus jenis produk ini?')"
+                                                style="display:inline;">
+
+                                                @csrf
+
+                                                @method('DELETE')
+
+                                                <button type="submit"
+                                                    class="btn-hapus">
+
+                                                    <i class="fas fa-trash"></i>
+
+                                                    Hapus
+
+                                                </button>
+
+                                            </form>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            @empty
+
+                                <tr>
+
+                                    <td colspan="5"
+                                        class="empty">
+
+                                        <i class="fas fa-tags"></i>
+
+                                        Belum ada jenis produk.
+
+                                    </td>
+
+                                </tr>
+
+                            @endforelse
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
-</div>
 
-@endsection
+    <!-- =========================
+         MODAL TAMBAH
+    ========================= -->
+
+    <div id="modalTambah"
+        class="modal-overlay">
+
+        <div class="modal-box">
+
+            <div class="modal-header">
+
+                <h3>
+
+                    <i class="fas fa-tag"></i>
+
+                    Tambah Jenis Produk
+
+                </h3>
+
+
+                <button type="button"
+                    class="btn-close"
+                    onclick="closeModal()">
+
+                    &times;
+
+                </button>
+
+            </div>
+
+
+            <form action="{{ route('jenis-produk.store') }}"
+                method="POST">
+
+                @csrf
+
+                <div class="modal-body">
+
+                    <div class="form-group">
+
+                        <label for="nama">
+
+                            Nama Jenis Produk
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nama"
+                            name="nama"
+                            placeholder="Masukkan nama jenis produk..."
+                            value="{{ old('nama') }}"
+                            autocomplete="off"
+                            required>
+
+
+                        @error('nama')
+
+                            <small class="error">
+
+                                {{ $message }}
+
+                            </small>
+
+                        @enderror
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                        class="btn-batal"
+                        onclick="closeModal()">
+
+                        Batal
+
+                    </button>
+
+
+                    <button type="submit"
+                        class="btn-simpan">
+
+                        <i class="fas fa-save"></i>
+
+                        Simpan
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        function openModal() {
+
+            const modal =
+                document.getElementById('modalTambah');
+
+            modal.classList.add('active');
+
+            setTimeout(function () {
+
+                document
+                    .getElementById('nama')
+                    .focus();
+
+            }, 100);
+
+        }
+
+
+        function closeModal() {
+
+            document
+                .getElementById('modalTambah')
+                .classList.remove('active');
+
+        }
+
+
+        document
+            .getElementById('modalTambah')
+            .addEventListener('click', function (event) {
+
+                if (event.target === this) {
+
+                    closeModal();
+
+                }
+
+            });
+
+
+        document.addEventListener(
+            'keydown',
+            function (event) {
+
+                if (event.key === 'Escape') {
+
+                    closeModal();
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

@@ -16,17 +16,11 @@ class JenisProduk extends Model
         'nama',
     ];
 
-    /**
-     * Relasi ke User
-     */
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /**
-     * Relasi ke Produk
-     */
     public function produk()
     {
         return $this->hasMany(Produk::class, 'jenis_produk_id');

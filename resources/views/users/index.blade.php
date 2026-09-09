@@ -1,499 +1,360 @@
 @extends('layouts.app')
 
-@section('title','Users')
+@section('title', 'Users')
 
 @section('content')
 
 <style>
-
-/* =========================
-   BABY BLUE - USER PAGE
-========================= */
-
-:root {
-    --baby-blue: #89CFF0;
-    --blue-main: #5BBCE4;
-    --blue-dark: #247BA0;
-    --blue-deep: #155E75;
-    --blue-soft: #EAF8FD;
-    --blue-light: #F5FCFF;
-    --blue-border: #B9E5F7;
-}
-
-
-/* =========================
-   BODY
-========================= */
-
-body {
-
-    background:
-        linear-gradient(
-            135deg,
-            #F5FCFF 0%,
-            #EAF8FD 50%,
-            #F8FDFF 100%
-        ) !important;
-
-}
-
-
-/* =========================
-   PAGE TITLE
-========================= */
-
-.page-title {
-
-    color: var(--blue-dark);
-
-    font-weight: 800;
-
-    font-size: 35px;
-
-    letter-spacing: -.5px;
-
-}
-
-
-.page-subtitle {
-
-    color: #6E929F;
-
-}
-
-
-/* =========================
-   CARD
-========================= */
-
-.user-card {
-
-    border: 1px solid #D9F1FA;
-
-    border-radius: 20px;
-
-    overflow: hidden;
-
-    background: white;
-
-    box-shadow:
-        0 12px 35px rgba(36,123,160,.12);
-
-}
-
-
-/* =========================
-   CARD HEADER
-========================= */
-
-.card-header-custom {
-
-    background:
-        linear-gradient(
-            135deg,
-            #89CFF0,
-            #5BBCE4
-        );
-
-    color: white;
-
-    padding: 22px;
-
-}
-
-
-.card-header-custom h5 {
-
-    font-weight: 700;
-
-}
-
-
-.card-header-custom small {
-
-    opacity: .95;
-
-}
-
-
-/* =========================
-   SEARCH
-========================= */
-
-.search-box {
-
-    border-radius: 12px;
-
-    border: 2px solid var(--blue-border);
-
-    height: 48px;
-
-    color: var(--blue-deep);
-
-    background: white;
-
-    transition: all .25s ease;
-
-}
-
-
-.search-box::placeholder {
-
-    color: #8CB8C9;
-
-}
-
-
-.search-box:focus {
-
-    border-color: var(--blue-main);
-
-    box-shadow:
-        0 0 0 4px rgba(91,188,228,.13);
-
-    outline: none;
-
-}
-
-
-/* =========================
-   BUTTON TAMBAH
-========================= */
-
-.btn-pink {
-
-    background:
-        linear-gradient(
-            135deg,
-            #89CFF0,
-            #5BBCE4
-        );
-
-    color: white;
-
-    border: none;
-
-    border-radius: 10px;
-
-    padding: 10px 18px;
-
-    font-weight: 600;
-
-    box-shadow:
-        0 5px 12px rgba(91,188,228,.20);
-
-    transition: all .25s ease;
-
-}
-
-
-.btn-pink:hover {
-
-    background:
-        linear-gradient(
-            135deg,
-            #5BBCE4,
-            #247BA0
-        );
-
-    color: white;
-
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 7px 16px rgba(36,123,160,.22);
-
-}
-
-
-/* =========================
-   BUTTON EDIT
-========================= */
-
-.btn-edit {
-
-    background: #DDF4FC;
-
-    color: var(--blue-dark);
-
-    border: 1px solid #B9E5F7;
-
-    border-radius: 8px;
-
-    transition: all .2s ease;
-
-}
-
-
-.btn-edit:hover {
-
-    background: #89CFF0;
-
-    color: white;
-
-    border-color: #89CFF0;
-
-    transform: translateY(-1px);
-
-}
-
-
-/* =========================
-   BUTTON DELETE
-========================= */
-
-.btn-delete {
-
-    background: #E88B9A;
-
-    color: white;
-
-    border: none;
-
-    border-radius: 8px;
-
-    transition: all .2s ease;
-
-}
-
-
-.btn-delete:hover {
-
-    background: #D65F72;
-
-    color: white;
-
-    transform: translateY(-1px);
-
-}
-
-
-/* =========================
-   TABLE
-========================= */
-
-.table {
-
-    margin-bottom: 0;
-
-}
-
-
-.table thead {
-
-    background:
-        linear-gradient(
-            90deg,
-            #EAF8FD,
-            #DDF4FC
-        );
-
-    color: var(--blue-dark);
-
-}
-
-
-.table thead th {
-
-    border: none;
-
-    text-align: center;
-
-    padding: 15px;
-
-    font-weight: 700;
-
-}
-
-
-.table tbody tr {
-
-    transition: all .2s ease;
-
-}
-
-
-.table tbody tr:hover {
-
-    background: #F2FBFE;
-
-    transform: scale(1.002);
-
-}
-
-
-.table td {
-
-    vertical-align: middle;
-
-    color: #496B78;
-
-}
-
-
-.table td strong {
-
-    color: #315F70;
-
-}
-
-
-/* =========================
-   BADGE ADMIN
-========================= */
-
-.badge-admin {
-
-    background:
-        linear-gradient(
-            135deg,
-            #5BBCE4,
-            #247BA0
-        );
-
-    padding: 8px 14px;
-
-    border-radius: 20px;
-
-    color: white;
-
-    font-size: 13px;
-
-    font-weight: 600;
-
-    display: inline-block;
-
-    box-shadow:
-        0 3px 8px rgba(36,123,160,.15);
-
-}
-
-
-/* =========================
-   BADGE KASIR
-========================= */
-
-.badge-kasir {
-
-    background: #DDF4FC;
-
-    border: 1px solid #B9E5F7;
-
-    padding: 8px 14px;
-
-    border-radius: 20px;
-
-    color: var(--blue-dark);
-
-    font-size: 13px;
-
-    font-weight: 600;
-
-    display: inline-block;
-
-}
-
-
-/* =========================
-   PAGINATION
-========================= */
-
-.pagination .page-link {
-
-    color: var(--blue-dark);
-
-    border-color: var(--blue-border);
-
-    border-radius: 8px;
-
-    margin: 0 2px;
-
-    transition: all .2s ease;
-
-}
-
-
-.pagination .page-link:hover {
-
-    background: var(--blue-main);
-
-    color: white;
-
-    border-color: var(--blue-main);
-
-}
-
-
-.pagination .active .page-link {
-
-    background:
-        linear-gradient(
-            135deg,
-            #89CFF0,
-            #5BBCE4
-        );
-
-    border-color: var(--blue-main);
-
-    color: white;
-
-}
-
-
-/* =========================
-   EMPTY DATA
-========================= */
-
-.table tbody tr td h5 {
-
-    color: #7A9BA7 !important;
-
-}
-
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:768px) {
+    /* =========================
+       BABY BLUE - USER PAGE
+    ========================= */
+
+    :root {
+        --baby-blue: #89CFF0;
+        --blue-main: #5BBCE4;
+        --blue-dark: #247BA0;
+        --blue-deep: #155E75;
+        --blue-soft: #EAF8FD;
+        --blue-light: #F5FCFF;
+        --blue-border: #B9E5F7;
+    }
+
+    /* =========================
+       BODY
+    ========================= */
+
+    body {
+        background:
+            linear-gradient(
+                135deg,
+                #F5FCFF 0%,
+                #EAF8FD 50%,
+                #F8FDFF 100%
+            ) !important;
+    }
+
+    /* =========================
+       PAGE TITLE
+    ========================= */
 
     .page-title {
-
-        font-size: 28px;
-
+        color: var(--blue-dark);
+        font-weight: 800;
+        font-size: 35px;
+        letter-spacing: -.5px;
     }
 
     .page-subtitle {
-
-        font-size: 14px;
-
+        color: #6E929F;
     }
+
+    /* =========================
+       CARD
+    ========================= */
 
     .user-card {
-
-        border-radius: 16px;
-
+        border: 1px solid #D9F1FA;
+        border-radius: 20px;
+        overflow: hidden;
+        background: white;
+        box-shadow:
+            0 12px 35px rgba(36,123,160,.12);
     }
+
+    /* =========================
+       CARD HEADER
+    ========================= */
 
     .card-header-custom {
+        background:
+            linear-gradient(
+                135deg,
+                #89CFF0,
+                #5BBCE4
+            );
 
-        padding: 18px;
-
+        color: white;
+        padding: 22px;
     }
+
+    .card-header-custom h5 {
+        font-weight: 700;
+    }
+
+    .card-header-custom small {
+        opacity: .95;
+    }
+
+    /* =========================
+       SEARCH
+    ========================= */
+
+    .search-box {
+        border-radius: 12px;
+        border: 2px solid var(--blue-border);
+        height: 48px;
+        color: var(--blue-deep);
+        background: white;
+        transition: all .25s ease;
+    }
+
+    .search-box::placeholder {
+        color: #8CB8C9;
+    }
+
+    .search-box:focus {
+        border-color: var(--blue-main);
+        box-shadow:
+            0 0 0 4px rgba(91,188,228,.13);
+        outline: none;
+    }
+
+    /* =========================
+       BUTTON TAMBAH
+    ========================= */
 
     .btn-pink {
+        background:
+            linear-gradient(
+                135deg,
+                #89CFF0,
+                #5BBCE4
+            );
 
-        padding: 9px 14px;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 18px;
+        font-weight: 600;
 
-        font-size: 14px;
+        box-shadow:
+            0 5px 12px rgba(91,188,228,.20);
 
+        transition: all .25s ease;
     }
 
-}
+    .btn-pink:hover {
+        background:
+            linear-gradient(
+                135deg,
+                #5BBCE4,
+                #247BA0
+            );
 
+        color: white;
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 7px 16px rgba(36,123,160,.22);
+    }
+
+    /* =========================
+       BUTTON EDIT
+    ========================= */
+
+    .btn-edit {
+        background: #DDF4FC;
+        color: var(--blue-dark);
+        border: 1px solid #B9E5F7;
+        border-radius: 8px;
+        transition: all .2s ease;
+    }
+
+    .btn-edit:hover {
+        background: #89CFF0;
+        color: white;
+        border-color: #89CFF0;
+        transform: translateY(-1px);
+    }
+
+    /* =========================
+       BUTTON DELETE
+    ========================= */
+
+    .btn-delete {
+        background: #E88B9A;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        transition: all .2s ease;
+    }
+
+    .btn-delete:hover {
+        background: #D65F72;
+        color: white;
+        transform: translateY(-1px);
+    }
+
+    /* =========================
+       TABLE
+    ========================= */
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table thead {
+        background:
+            linear-gradient(
+                90deg,
+                #EAF8FD,
+                #DDF4FC
+            );
+
+        color: var(--blue-dark);
+    }
+
+    .table thead th {
+        border: none;
+        text-align: center;
+        padding: 15px;
+        font-weight: 700;
+    }
+
+    .table tbody tr {
+        transition: all .2s ease;
+    }
+
+    .table tbody tr:hover {
+        background: #F2FBFE;
+        transform: scale(1.002);
+    }
+
+    .table td {
+        vertical-align: middle;
+        color: #496B78;
+    }
+
+    .table td strong {
+        color: #315F70;
+    }
+
+    /* =========================
+       BADGE ADMIN
+    ========================= */
+
+    .badge-admin {
+        background:
+            linear-gradient(
+                135deg,
+                #5BBCE4,
+                #247BA0
+            );
+
+        padding: 8px 14px;
+        border-radius: 20px;
+        color: white;
+        font-size: 13px;
+        font-weight: 600;
+        display: inline-block;
+
+        box-shadow:
+            0 3px 8px rgba(36,123,160,.15);
+    }
+
+    /* =========================
+       BADGE KASIR
+    ========================= */
+
+    .badge-kasir {
+        background: #DDF4FC;
+        border: 1px solid #B9E5F7;
+        padding: 8px 14px;
+        border-radius: 20px;
+        color: var(--blue-dark);
+        font-size: 13px;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    /* =========================
+       BADGE ROLE LAIN
+    ========================= */
+
+    .badge-other {
+        background: #F1F5F7;
+        border: 1px solid #D5E3E8;
+        padding: 8px 14px;
+        border-radius: 20px;
+        color: #607D87;
+        font-size: 13px;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    /* =========================
+       PAGINATION
+    ========================= */
+
+    .pagination .page-link {
+        color: var(--blue-dark);
+        border-color: var(--blue-border);
+        border-radius: 8px;
+        margin: 0 2px;
+        transition: all .2s ease;
+    }
+
+    .pagination .page-link:hover {
+        background: var(--blue-main);
+        color: white;
+        border-color: var(--blue-main);
+    }
+
+    .pagination .active .page-link {
+        background:
+            linear-gradient(
+                135deg,
+                #89CFF0,
+                #5BBCE4
+            );
+
+        border-color: var(--blue-main);
+        color: white;
+    }
+
+    /* =========================
+       EMPTY DATA
+    ========================= */
+
+    .table tbody tr td h5 {
+        color: #7A9BA7 !important;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media(max-width:768px) {
+
+        .page-title {
+            font-size: 28px;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+        }
+
+        .user-card {
+            border-radius: 16px;
+        }
+
+        .card-header-custom {
+            padding: 18px;
+        }
+
+        .btn-pink {
+            padding: 9px 14px;
+            font-size: 14px;
+        }
+    }
 </style>
 
+
 <div class="container py-4">
+
+    <!-- =========================
+         JUDUL HALAMAN
+    ========================= -->
 
     <div class="d-flex justify-content-between align-items-center mb-4">
 
@@ -509,7 +370,11 @@ body {
 
         </div>
 
-        <a href="{{ route('users.create') }}" class="btn btn-pink">
+
+        <!-- TAMBAH USER -->
+
+        <a href="{{ route('users.create') }}"
+           class="btn btn-pink">
 
             + Tambah User
 
@@ -517,7 +382,14 @@ body {
 
     </div>
 
+
+    <!-- =========================
+         CARD USER
+    ========================= -->
+
     <div class="card user-card">
+
+        <!-- HEADER -->
 
         <div class="card-header-custom">
 
@@ -526,12 +398,22 @@ body {
             </h5>
 
             <small>
-                Total User : <strong>{{ $users->total() }}</strong>
+                Total User :
+                <strong>
+                    {{ $users->total() }}
+                </strong>
             </small>
 
         </div>
 
+
+        <!-- BODY -->
+
         <div class="card-body">
+
+            <!-- =========================
+                 SEARCH
+            ========================= -->
 
             <form method="GET">
 
@@ -552,6 +434,11 @@ body {
 
             </form>
 
+
+            <!-- =========================
+                 TABLE
+            ========================= -->
+
             <div class="table-responsive">
 
                 <table class="table align-middle table-hover">
@@ -560,114 +447,187 @@ body {
 
                         <tr>
 
-                            <th width="70">No</th>
-                            <th>Nama</th>
-                            <th>Email</th>
-                            <th width="120">Role</th>
-                            <th width="170">Aksi</th>
+                            <th width="70">
+                                No
+                            </th>
+
+                            <th>
+                                Nama
+                            </th>
+
+                            <th>
+                                Email
+                            </th>
+
+                            <th width="120">
+                                Role
+                            </th>
+
+                            <th width="170">
+                                Aksi
+                            </th>
 
                         </tr>
 
                     </thead>
 
+
                     <tbody>
 
-                    @forelse($users as $user)
+                        @forelse($users as $user)
 
-                    <tr>
+                            <tr>
 
-                        <td class="text-center">
-                            {{ $loop->iteration }}
-                        </td>
+                                <!-- NO -->
 
-                        <td>
+                                <td class="text-center">
 
-                            <strong>{{ $user->name }}</strong>
+                                    {{ $loop->iteration }}
 
-                        </td>
+                                </td>
 
-                        <td>
 
-                            {{ $user->email }}
+                                <!-- NAMA -->
 
-                        </td>
+                                <td>
 
-                        <td class="text-center">
+                                    <strong>
+                                        {{ $user->name }}
+                                    </strong>
 
-                            @if($user->role->name=='admin')
+                                </td>
 
-                                <span class="badge-admin">
 
-                                    Admin
+                                <!-- EMAIL -->
 
-                                </span>
+                                <td>
 
-                            @else
+                                    {{ $user->email }}
 
-                                <span class="badge-kasir">
+                                </td>
 
-                                    Kasir
 
-                                </span>
+                                <!-- ROLE -->
 
-                            @endif
+                                <td class="text-center">
 
-                        </td>
+                                    @php
+                                        $roleName = strtolower(
+                                            trim(
+                                                $user->role?->name ?? ''
+                                            )
+                                        );
+                                    @endphp
 
-                        <td class="text-center">
 
-                            <a href="{{ route('users.edit',$user->id) }}"
-                               class="btn btn-sm btn-edit">
+                                    @if($roleName === 'admin')
 
-                                 Edit
+                                        <span class="badge-admin">
 
-                            </a>
+                                            Admin
 
-                            <form
-                                action="{{ route('users.destroy',$user->id) }}"
-                                method="POST"
-                                style="display:inline;">
+                                        </span>
 
-                                @csrf
-                                @method('DELETE')
+                                    @elseif($roleName === 'kasir')
 
-                                <button
-                                    onclick="return confirm('Yakin ingin menghapus user ini?')"
-                                    class="btn btn-sm btn-delete">
+                                        <span class="badge-kasir">
 
-                                    Hapus
+                                            Kasir
 
-                                </button>
+                                        </span>
 
-                            </form>
+                                    @elseif($roleName !== '')
 
-                        </td>
+                                        <span class="badge-other">
 
-                    </tr>
+                                            {{ $user->role->name }}
 
-                    @empty
+                                        </span>
 
-                    <tr>
+                                    @else
 
-                        <td colspan="5" class="text-center py-5">
+                                        <span class="badge-other">
 
-                            <h5 style="color:#999">
+                                            -
 
-                                Belum ada data user
+                                        </span>
 
-                            </h5>
+                                    @endif
 
-                        </td>
+                                </td>
 
-                    </tr>
 
-                    @endforelse
+                                <!-- AKSI -->
+
+                                <td class="text-center">
+
+                                    <!-- EDIT -->
+
+                                    <a
+                                        href="{{ route('users.edit', $user->id) }}"
+                                        class="btn btn-sm btn-edit">
+
+                                        Edit
+
+                                    </a>
+
+
+                                    <!-- HAPUS -->
+
+                                    <form
+                                        action="{{ route('users.destroy', $user->id) }}"
+                                        method="POST"
+                                        style="display:inline;">
+
+                                        @csrf
+
+                                        @method('DELETE')
+
+                                        <button
+                                            type="submit"
+                                            onclick="return confirm('Yakin ingin menghapus user ini?')"
+                                            class="btn btn-sm btn-delete">
+
+                                            Hapus
+
+                                        </button>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+
+                        @empty
+
+                            <tr>
+
+                                <td
+                                    colspan="5"
+                                    class="text-center py-5">
+
+                                    <h5 style="color:#999">
+
+                                        Belum ada data user
+
+                                    </h5>
+
+                                </td>
+
+                            </tr>
+
+                        @endforelse
 
                     </tbody>
 
                 </table>
 
             </div>
+
+
+            <!-- =========================
+                 PAGINATION
+            ========================= -->
 
             <div class="d-flex justify-content-end mt-4">
 

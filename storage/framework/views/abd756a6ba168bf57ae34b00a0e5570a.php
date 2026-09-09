@@ -1,1348 +1,1554 @@
+<!DOCTYPE html>
+<html lang="id">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<?php $__env->startSection('title', 'Jenis Produk'); ?>
-
-<?php $__env->startSection('content'); ?>
-
-<style>
+    <title>Jenis Produk</title>
 
-/* =========================================================
-   MODERN BABY BLUE - JENIS PRODUK
-   ========================================================= */
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-:root {
-    --blue-50: #f4fbff;
-    --blue-100: #e8f7fd;
-    --blue-200: #d4f0fa;
-    --blue-300: #b5e4f5;
-    --blue-400: #89cff0;
-    --blue-500: #5bbce4;
-    --blue-600: #369fca;
-    --blue-700: #247ba0;
-    --blue-800: #155e75;
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    --text-dark: #254b59;
-    --text-muted: #7895a0;
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(
+                135deg,
+                #f1fbff,
+                #e5f7fd,
+                #f8fdff
+            );
+            min-height: 100vh;
+            color: #164d63;
+        }
 
-    --danger: #e96f83;
-    --danger-dark: #d95368;
+        /* =========================
+           NAVBAR
+        ========================= */
 
-    --white: #ffffff;
-}
+        .navbar {
+            width: 100%;
+            min-height: 78px;
 
+            background: linear-gradient(
+                90deg,
+                #70cce9,
+                #49afd6
+            );
 
-/* =========================================================
-   BODY
-   ========================================================= */
+            display: flex;
+            align-items: center;
 
-body {
-    min-height: 100vh;
+            padding: 0 22px;
 
-    background:
-        radial-gradient(
-            circle at 10% 10%,
-            rgba(137, 207, 240, .20),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 90% 20%,
-            rgba(91, 188, 228, .12),
-            transparent 25%
-        ),
-        linear-gradient(
-            135deg,
-            #f8fdff 0%,
-            #edfaff 45%,
-            #f7fcff 100%
-        ) !important;
-}
+            border-radius: 0 0 18px 18px;
 
+            box-shadow:
+                0 5px 15px rgba(58, 160, 200, .20);
 
-/* =========================================================
-   MAIN CONTAINER
-   ========================================================= */
+            color: white;
+        }
 
-.jenis-container {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 45px 22px 60px;
-}
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
 
+            font-size: 21px;
+            font-weight: bold;
 
-/* =========================================================
-   HEADER
-   ========================================================= */
+            margin-right: 25px;
+        }
 
-.jenis-header {
-    position: relative;
-    margin-bottom: 25px;
-    padding: 5px 0;
-}
+        .logo-icon {
+            width: 40px;
+            height: 40px;
 
-.jenis-header::before {
-    content: "";
+            background: white;
 
-    position: absolute;
-    left: 0;
-    top: -10px;
+            border-radius: 50%;
 
-    width: 55px;
-    height: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-    border-radius: 20px;
+            color: #239ac7;
 
-    background:
-        linear-gradient(
-            90deg,
-            var(--blue-400),
-            var(--blue-600)
-        );
-}
+            font-size: 19px;
+        }
 
-.jenis-title {
-    margin: 0 0 7px;
+        .menu {
+            display: flex;
+            align-items: center;
 
-    color: var(--blue-800);
+            gap: 4px;
 
-    font-size: 34px;
-    font-weight: 800;
+            background: rgba(255, 255, 255, .10);
 
-    letter-spacing: -1px;
-}
+            border-radius: 14px;
 
-.jenis-subtitle {
-    margin: 0;
+            padding: 5px;
+        }
 
-    color: var(--text-muted);
+        .menu a {
+            text-decoration: none;
 
-    font-size: 15px;
-}
+            color: white;
 
+            padding: 13px 15px;
 
-/* =========================================================
-   BUTTON TAMBAH
-   ========================================================= */
+            border-radius: 11px;
 
-.btn-tambah-wrapper {
-    display: flex;
-    justify-content: flex-start;
+            font-size: 13px;
+            font-weight: 600;
 
-    margin-bottom: 22px;
-}
+            display: flex;
+            align-items: center;
 
-.btn-tambah {
-    position: relative;
+            gap: 7px;
 
-    display: inline-flex;
-    align-items: center;
+            transition: .2s;
+        }
 
-    gap: 9px;
+        .menu a:hover {
+            background: rgba(255, 255, 255, .18);
+        }
 
-    padding: 12px 20px;
+        .menu a.active {
+            background: white;
 
-    color: white;
+            color: #1676a3;
 
-    text-decoration: none;
+            box-shadow:
+                0 4px 10px rgba(0, 0, 0, .08);
+        }
 
-    border: none;
-    border-radius: 13px;
+        .navbar-right {
+            margin-left: auto;
 
-    font-size: 14px;
-    font-weight: 700;
+            display: flex;
+            align-items: center;
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--blue-400),
-            var(--blue-600)
-        );
+            gap: 14px;
+        }
 
-    box-shadow:
-        0 8px 20px rgba(91, 188, 228, .25);
+        .login-info {
+            background: rgba(255, 255, 255, .18);
 
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease,
-        background .25s ease;
-}
+            padding: 9px 15px;
 
-.btn-tambah i {
-    font-size: 17px;
-}
+            border-radius: 12px;
 
-.btn-tambah:hover {
-    color: white;
+            display: flex;
+            align-items: center;
 
-    transform: translateY(-3px);
+            gap: 9px;
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--blue-500),
-            var(--blue-700)
-        );
+            font-size: 11px;
+        }
 
-    box-shadow:
-        0 12px 25px rgba(36, 123, 160, .25);
-}
+        .login-info i {
+            width: 30px;
+            height: 30px;
 
+            background: white;
 
-/* =========================================================
-   MAIN CARD
-   ========================================================= */
+            color: #1680ad;
 
-.jenis-card {
-    position: relative;
+            border-radius: 50%;
 
-    overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-    background: rgba(255, 255, 255, .95);
+            font-size: 14px;
+        }
 
-    border:
-        1px solid rgba(181, 228, 245, .75);
+        .login-info strong {
+            display: block;
 
-    border-radius: 22px;
+            font-size: 11px;
+        }
 
-    box-shadow:
-        0 18px 50px rgba(36, 123, 160, .10);
+        .logout {
+            border: none;
 
-    animation: jenisFade .5s ease;
-}
+            background: white;
 
+            color: #1473a0;
 
-/* =========================================================
-   CARD HEADER
-   ========================================================= */
+            padding: 12px 18px;
 
-.jenis-card-header {
-    position: relative;
+            border-radius: 10px;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+            font-weight: bold;
 
-    gap: 15px;
+            cursor: pointer;
 
-    padding: 25px 28px;
+            display: flex;
+            align-items: center;
 
-    color: white;
+            gap: 7px;
+        }
 
-    background:
-        linear-gradient(
-            120deg,
-            #89cff0 0%,
-            #5bbce4 55%,
-            #43abd4 100%
-        );
+        /* =========================
+           CONTAINER
+        ========================= */
 
-    overflow: hidden;
-}
+        .container {
+            width: 1000px;
 
-.jenis-card-header::after {
-    content: "";
+            max-width: calc(100% - 40px);
 
-    position: absolute;
+            margin: 20px auto 50px;
+        }
 
-    width: 180px;
-    height: 180px;
+        .page-title {
+            margin-bottom: 25px;
+        }
 
-    right: -60px;
-    top: -100px;
+        .page-title h1 {
+            font-size: 29px;
 
-    border-radius: 50%;
+            color: #145a73;
 
-    background: rgba(255,255,255,.12);
-}
+            font-weight: 800;
 
-.jenis-card-header h4 {
-    position: relative;
-    z-index: 2;
+            margin-bottom: 7px;
+        }
 
-    display: flex;
-    align-items: center;
+        .page-title p {
+            color: #6a99aa;
 
-    gap: 10px;
+            font-size: 14px;
+        }
 
-    margin: 0;
+        /* =========================
+           BUTTON TAMBAH
+        ========================= */
 
-    font-size: 18px;
-    font-weight: 700;
-}
+        .btn-tambah {
+            display: inline-flex;
 
-.jenis-card-header h4 i {
-    font-size: 20px;
-}
+            align-items: center;
 
-.jenis-card-header p {
-    position: relative;
-    z-index: 2;
+            gap: 9px;
 
-    margin: 0;
+            padding: 13px 19px;
 
-    padding: 7px 14px;
+            border: none;
 
-    color: white;
+            border-radius: 12px;
 
-    font-size: 13px;
-    font-weight: 600;
+            background: linear-gradient(
+                135deg,
+                #65c5e8,
+                #369dca
+            );
 
-    border:
-        1px solid rgba(255,255,255,.25);
+            color: white;
 
-    border-radius: 30px;
+            font-size: 13px;
 
-    background: rgba(255,255,255,.18);
+            font-weight: bold;
 
-    backdrop-filter: blur(8px);
-}
+            cursor: pointer;
 
+            box-shadow:
+                0 7px 16px rgba(51, 162, 204, .20);
 
-/* =========================================================
-   CARD BODY
-   ========================================================= */
+            margin-bottom: 20px;
 
-.jenis-card-body {
-    padding: 28px;
-}
+            transition: .2s;
+        }
 
+        .btn-tambah:hover {
+            transform: translateY(-2px);
 
-/* =========================================================
-   SEARCH AREA
-   ========================================================= */
+            box-shadow:
+                0 9px 18px rgba(51, 162, 204, .28);
+        }
 
-.search-box {
-    display: flex;
-    align-items: center;
+        /* =========================
+           CARD
+        ========================= */
 
-    gap: 10px;
+        .card {
+            background: white;
 
-    margin-bottom: 25px;
-}
+            border-radius: 19px;
 
-.search-input-wrapper {
-    position: relative;
+            overflow: hidden;
 
-    max-width: 450px;
+            border: 1px solid #d2edf7;
 
-    flex: 1;
-}
+            box-shadow:
+                0 12px 30px rgba(50, 153, 190, .10);
+        }
 
-.search-input-wrapper i {
-    position: absolute;
+        .card-header {
+            height: 73px;
 
-    left: 15px;
-    top: 50%;
+            padding: 0 25px;
 
-    color: var(--blue-500);
+            background: linear-gradient(
+                90deg,
+                #72c9e8,
+                #49afd5
+            );
 
-    font-size: 16px;
+            color: white;
 
-    transform: translateY(-50%);
+            display: flex;
 
-    pointer-events: none;
-}
+            align-items: center;
 
-.search-box input {
-    width: 100%;
+            justify-content: space-between;
+        }
 
-    padding: 12px 16px 12px 42px;
+        .card-title {
+            font-size: 16px;
 
-    color: var(--text-dark);
+            font-weight: bold;
 
-    border:
-        1.5px solid var(--blue-300);
+            display: flex;
 
-    border-radius: 13px;
+            align-items: center;
 
-    background: #fbfeff;
+            gap: 10px;
+        }
 
-    outline: none;
+        .total {
+            padding: 8px 14px;
 
-    transition:
-        border-color .25s ease,
-        box-shadow .25s ease,
-        background .25s ease;
-}
+            border-radius: 20px;
 
-.search-box input::placeholder {
-    color: #9ab7c1;
-}
+            background: rgba(255, 255, 255, .17);
 
-.search-box input:focus {
-    background: white;
+            border: 1px solid rgba(255, 255, 255, .28);
 
-    border-color: var(--blue-500);
+            font-size: 11px;
 
-    box-shadow:
-        0 0 0 4px rgba(91,188,228,.12);
-}
+            font-weight: bold;
+        }
 
+        .card-body {
+            padding: 24px;
+        }
 
-/* =========================================================
-   BUTTON CARI
-   ========================================================= */
+        /* =========================
+           ALERT
+        ========================= */
 
-.btn-cari {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+        .alert {
+            padding: 13px 16px;
 
-    gap: 7px;
+            border-radius: 10px;
 
-    padding: 11px 20px;
+            margin-bottom: 18px;
 
-    color: var(--blue-700);
+            font-size: 13px;
 
-    border:
-        1.5px solid var(--blue-400);
+            font-weight: 600;
+        }
 
-    border-radius: 12px;
+        .alert-success {
+            background: #e5f9ef;
 
-    background: white;
+            color: #198754;
 
-    font-size: 14px;
-    font-weight: 700;
+            border: 1px solid #bcebd0;
+        }
 
-    transition: all .25s ease;
-}
+        .alert-error {
+            background: #fff0f2;
 
-.btn-cari:hover {
-    color: white;
+            color: #dc5368;
 
-    border-color: var(--blue-500);
+            border: 1px solid #ffd0d7;
+        }
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--blue-400),
-            var(--blue-600)
-        );
+        /* =========================
+           SEARCH
+        ========================= */
 
-    transform: translateY(-2px);
+        .search-box {
+            display: flex;
 
-    box-shadow:
-        0 7px 17px rgba(91,188,228,.22);
-}
+            gap: 8px;
 
+            margin-bottom: 21px;
+        }
 
-/* =========================================================
-   TABLE WRAPPER
-   ========================================================= */
+        .search-input {
+            flex: 1;
 
-.table-responsive {
-    border-radius: 15px;
+            height: 42px;
 
-    overflow-x: auto;
-    overflow-y: hidden;
+            border: 1px solid #b9e5f5;
 
-    border:
-        1px solid #e3f3f8;
-}
+            border-radius: 10px;
 
+            padding: 0 14px;
 
-/* =========================================================
-   TABLE
-   ========================================================= */
+            outline: none;
 
-.table {
-    width: 100%;
+            color: #23657b;
 
-    min-width: 850px;
+            font-size: 13px;
+        }
 
-    margin-bottom: 0;
+        .search-input:focus {
+            border-color: #4db4dc;
 
-    border-collapse: separate;
-    border-spacing: 0;
-}
+            box-shadow:
+                0 0 0 3px rgba(77, 180, 220, .10);
+        }
 
+        .btn-search {
+            height: 42px;
 
-/* =========================================================
-   TABLE HEADER
-   ========================================================= */
+            padding: 0 17px;
 
-.table thead th {
-    padding: 15px 17px;
+            border: 1px solid #8bd2eb;
 
-    color: var(--blue-700);
+            background: white;
 
-    background:
-        linear-gradient(
-            180deg,
-            #edfaff,
-            #e8f7fd
-        );
+            color: #167da7;
 
-    border: none;
+            border-radius: 10px;
 
-    font-size: 12px;
-    font-weight: 800;
+            cursor: pointer;
 
-    text-transform: uppercase;
+            font-weight: bold;
 
-    letter-spacing: .6px;
-}
+            display: flex;
 
+            align-items: center;
 
-/* =========================================================
-   TABLE BODY
-   ========================================================= */
+            gap: 7px;
+        }
 
-.table tbody td {
-    padding: 17px;
+        .btn-search:hover {
+            background: #eefaff;
+        }
 
-    vertical-align: middle;
+        /* =========================
+           TABLE
+        ========================= */
 
-    color: #526f79;
+        .table-wrapper {
+            overflow-x: auto;
 
-    background: white;
+            border: 1px solid #d8edf5;
 
-    border-bottom:
-        1px solid #e9f5f8;
-}
+            border-radius: 13px;
+        }
 
-.table tbody tr {
-    transition:
-        background .2s ease,
-        transform .2s ease;
-}
+        table {
+            width: 100%;
 
-.table tbody tr:hover td {
-    background: #f5fcff;
-}
+            border-collapse: collapse;
 
-.table tbody tr:last-child td {
-    border-bottom: none;
-}
+            min-width: 800px;
+        }
 
+        thead {
+            background: #e9f8fd;
+        }
 
-/* =========================================================
-   NUMBER BADGE
-   ========================================================= */
+        th {
+            text-align: left;
 
-.badge-nomor {
-    display: inline-flex;
+            padding: 14px;
 
-    align-items: center;
-    justify-content: center;
+            font-size: 11px;
 
-    width: 35px;
-    height: 35px;
+            color: #177496;
 
-    color: var(--blue-700);
+            font-weight: 800;
 
-    border:
-        1px solid var(--blue-300);
+            text-transform: uppercase;
+        }
 
-    border-radius: 50%;
+        td {
+            padding: 13px 14px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #eaf8fd,
-            #dff5fc
-        );
+            border-top: 1px solid #e7f3f7;
 
-    font-size: 13px;
-    font-weight: 800;
+            font-size: 12px;
 
-    box-shadow:
-        inset 0 1px 2px rgba(255,255,255,.7);
-}
+            font-weight: 600;
 
+            color: #315f70;
+        }
 
-/* =========================================================
-   USER
-   ========================================================= */
+        tbody tr:hover {
+            background: #f7fcfe;
+        }
 
-.nama-user {
-    display: inline-flex;
+        /* =========================
+           NOMOR
+        ========================= */
 
-    align-items: center;
+        .number {
+            width: 55px;
+        }
 
-    color: #315f70;
+        .number span {
+            width: 31px;
 
-    font-size: 14px;
-    font-weight: 700;
-}
+            height: 31px;
 
-.nama-user i {
-    display: inline-flex;
+            display: flex;
 
-    align-items: center;
-    justify-content: center;
+            align-items: center;
 
-    width: 30px;
-    height: 30px;
+            justify-content: center;
 
-    margin-right: 10px;
+            border-radius: 50%;
 
-    color: var(--blue-600);
+            background: #ecf9fd;
 
-    border-radius: 9px;
+            border: 1px solid #bce5f3;
 
-    background: var(--blue-100);
-}
+            color: #1680a9;
 
+            font-size: 12px;
+        }
 
-/* =========================================================
-   NAMA JENIS
-   ========================================================= */
+        /* =========================
+           USER
+        ========================= */
 
-.nama-jenis {
-    display: inline-flex;
+        .user-name {
+            display: flex;
 
-    align-items: center;
+            align-items: center;
 
-    color: #315f70;
+            gap: 8px;
 
-    font-size: 14px;
-    font-weight: 700;
-}
+            white-space: nowrap;
+        }
 
-.nama-jenis i {
-    display: inline-flex;
+        .user-icon {
+            width: 30px;
 
-    align-items: center;
-    justify-content: center;
+            height: 30px;
 
-    width: 30px;
-    height: 30px;
+            display: flex;
 
-    margin-right: 10px;
+            align-items: center;
 
-    color: var(--blue-600) !important;
+            justify-content: center;
 
-    border-radius: 9px;
+            background: #e9f7fc;
 
-    background: var(--blue-100);
-}
+            border-radius: 8px;
 
+            color: #38a5cf;
 
-/* =========================================================
-   JUMLAH PRODUK
-   ========================================================= */
+            flex-shrink: 0;
+        }
 
-.badge-jumlah {
-    display: inline-flex;
+        .user-name strong {
+            color: #315f70;
 
-    align-items: center;
+            font-size: 12px;
+        }
 
-    gap: 5px;
+        /* =========================
+           NAMA JENIS
+        ========================= */
 
-    padding: 7px 12px;
+        .name {
+            display: flex;
 
-    color: var(--blue-700);
+            align-items: center;
 
-    border:
-        1px solid var(--blue-300);
+            gap: 10px;
+        }
 
-    border-radius: 30px;
+        .name-icon {
+            width: 28px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #f0fbff,
-            #e4f7fc
-        );
+            height: 28px;
 
-    font-size: 12.5px;
-    font-weight: 700;
-}
+            display: flex;
 
-.badge-jumlah i {
-    color: var(--blue-500);
-}
+            align-items: center;
 
+            justify-content: center;
 
-/* =========================================================
-   ACTION BUTTON
-   ========================================================= */
+            background: #e9f7fc;
 
-.btn-edit,
-.btn-hapus {
-    display: inline-flex;
+            border-radius: 8px;
 
-    align-items: center;
-    justify-content: center;
+            color: #38a5cf;
+        }
 
-    gap: 6px;
+        /* =========================
+           JUMLAH
+        ========================= */
 
-    padding: 7px 12px;
+        .jumlah {
+            display: inline-flex;
 
-    border-radius: 9px;
+            align-items: center;
 
-    font-size: 12.5px;
-    font-weight: 700;
+            gap: 7px;
 
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease,
-        background .2s ease;
-}
+            border: 1px solid #a9def0;
 
+            background: #effaff;
 
-/* =========================================================
-   EDIT
-   ========================================================= */
+            color: #1680a9;
 
-.btn-edit {
-    color: var(--blue-700);
+            border-radius: 20px;
 
-    border:
-        1px solid var(--blue-300);
+            padding: 7px 11px;
 
-    background: #eaf8fd;
+            font-size: 11px;
+        }
 
-    text-decoration: none;
-}
+        /* =========================
+           AKSI
+        ========================= */
 
-.btn-edit:hover {
-    color: white;
+        .actions {
+            display: flex;
 
-    background: var(--blue-500);
+            gap: 5px;
+        }
 
-    border-color: var(--blue-500);
+        .btn-edit,
+        .btn-hapus {
+            border: none;
 
-    transform: translateY(-2px);
+            padding: 8px 11px;
 
-    box-shadow:
-        0 5px 12px rgba(91,188,228,.22);
-}
+            border-radius: 8px;
 
+            font-size: 11px;
 
-/* =========================================================
-   HAPUS
-   ========================================================= */
+            font-weight: bold;
 
-.btn-hapus {
-    color: white;
+            cursor: pointer;
 
-    border: none;
+            text-decoration: none;
 
-    background:
-        linear-gradient(
-            135deg,
-            #ef8798,
-            #e56f82
-        );
-}
+            display: inline-flex;
 
-.btn-hapus:hover {
-    color: white;
+            align-items: center;
 
-    background:
-        linear-gradient(
-            135deg,
-            #e56f82,
-            #d65368
-        );
+            gap: 5px;
+        }
 
-    transform: translateY(-2px);
+        .btn-edit {
+            background: #effaff;
 
-    box-shadow:
-        0 5px 12px rgba(229,111,130,.22);
-}
+            color: #1480a8;
 
+            border: 1px solid #b7e4f3;
+        }
 
-/* =========================================================
-   ALERT
-   ========================================================= */
+        .btn-hapus {
+            background: #ed7186;
 
-.alert {
-    display: flex;
-    align-items: center;
+            color: white;
+        }
 
-    padding: 14px 18px;
+        .btn-edit:hover {
+            background: #dff6fc;
+        }
 
-    margin-bottom: 20px;
+        .btn-hapus:hover {
+            background: #df5b71;
+        }
 
-    border-radius: 13px;
+        /* =========================
+           MODAL
+        ========================= */
 
-    font-size: 14px;
-    font-weight: 600;
-}
+        .modal-overlay {
+            position: fixed;
 
-.alert-success {
-    color: #167457;
+            inset: 0;
 
-    background: #e8faf3;
+            background: rgba(20, 75, 94, .30);
 
-    border:
-        1px solid #b9ead8;
-}
+            display: none;
 
-.alert-danger {
-    color: #b33e51;
+            align-items: center;
 
-    background: #fff1f3;
+            justify-content: center;
 
-    border:
-        1px solid #f2c3cb;
-}
+            z-index: 9999;
 
+            padding: 20px;
+        }
 
-/* =========================================================
-   EMPTY STATE
-   ========================================================= */
+        .modal-overlay.active {
+            display: flex;
+        }
 
-.empty-state {
-    padding: 65px 20px !important;
+        .modal-box {
+            width: 440px;
 
-    color: var(--text-muted);
-}
+            max-width: 100%;
 
-.empty-state-icon {
-    display: flex;
+            background: white;
 
-    align-items: center;
-    justify-content: center;
+            border-radius: 18px;
 
-    width: 75px;
-    height: 75px;
+            overflow: hidden;
 
-    margin: 0 auto;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, .18);
 
-    color: var(--blue-500);
+            animation: modalShow .2s ease;
+        }
 
-    border-radius: 22px;
+        @keyframes modalShow {
 
-    background:
-        linear-gradient(
-            135deg,
-            #eaf8fd,
-            #dff5fc
-        );
+            from {
+                opacity: 0;
 
-    font-size: 34px;
+                transform: translateY(-15px) scale(.98);
+            }
 
-    box-shadow:
-        0 8px 20px rgba(91,188,228,.10);
-}
+            to {
+                opacity: 1;
 
-.empty-state p {
-    color: #7895a0;
+                transform: translateY(0) scale(1);
+            }
+        }
 
-    font-size: 14px;
-}
+        .modal-header {
+            background: linear-gradient(
+                90deg,
+                #72c9e8,
+                #49afd5
+            );
 
+            color: white;
 
-/* =========================================================
-   PAGINATION
-   ========================================================= */
+            padding: 20px 23px;
 
-.pagination {
-    justify-content: flex-end;
+            display: flex;
 
-    margin-top: 25px;
+            align-items: center;
 
-    gap: 4px;
-}
+            justify-content: space-between;
+        }
 
-.pagination .page-link {
-    min-width: 35px;
+        .modal-header h3 {
+            font-size: 16px;
 
-    text-align: center;
+            display: flex;
 
-    color: var(--blue-700);
+            align-items: center;
 
-    border:
-        1px solid var(--blue-300);
+            gap: 9px;
+        }
 
-    border-radius: 9px !important;
+        .btn-close {
+            border: none;
 
-    background: white;
+            background: transparent;
 
-    transition: all .2s ease;
-}
+            color: white;
 
-.pagination .page-link:hover {
-    color: white;
+            font-size: 25px;
 
-    background: var(--blue-500);
+            cursor: pointer;
 
-    border-color: var(--blue-500);
+            width: 32px;
 
-    transform: translateY(-1px);
-}
+            height: 32px;
 
-.pagination .active .page-link {
-    color: white;
+            border-radius: 50%;
+        }
 
-    border-color: var(--blue-500);
+        .btn-close:hover {
+            background: rgba(255, 255, 255, .15);
+        }
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--blue-400),
-            var(--blue-600)
-        );
+        .modal-body {
+            padding: 25px;
+        }
 
-    box-shadow:
-        0 4px 10px rgba(91,188,228,.20);
-}
+        .form-group {
+            margin-bottom: 5px;
+        }
 
+        .form-group label {
+            display: block;
 
-/* =========================================================
-   ANIMATION
-   ========================================================= */
+            color: #315f70;
 
-@keyframes jenisFade {
+            font-size: 13px;
 
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
+            font-weight: bold;
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+            margin-bottom: 9px;
+        }
 
-}
+        .form-group input {
+            width: 100%;
 
+            height: 44px;
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
+            border: 1px solid #b9e3f1;
 
-@media(max-width: 768px) {
+            border-radius: 10px;
 
-    .jenis-container {
-        margin: 0 auto;
+            outline: none;
 
-        padding:
-            30px 15px 45px;
-    }
+            padding: 0 14px;
 
-    .jenis-title {
-        font-size: 27px;
-    }
+            color: #315f70;
 
-    .jenis-subtitle {
-        font-size: 13.5px;
-    }
+            font-size: 13px;
+        }
 
-    .btn-tambah-wrapper {
-        width: 100%;
-    }
+        .form-group input:focus {
+            border-color: #49afd5;
 
-    .btn-tambah {
-        width: 100%;
+            box-shadow:
+                0 0 0 3px rgba(73, 175, 213, .10);
+        }
 
-        justify-content: center;
-    }
+        .error {
+            display: block;
 
-    .jenis-card-header {
-        flex-direction: column;
+            margin-top: 7px;
 
-        align-items: flex-start;
+            color: #dc5368;
 
-        padding: 20px;
-    }
+            font-size: 11px;
+        }
 
-    .jenis-card-header p {
-        font-size: 12px;
-    }
+        .modal-footer {
+            padding: 0 25px 24px;
 
-    .jenis-card-body {
-        padding: 18px;
-    }
+            display: flex;
 
-    .search-box {
-        flex-direction: column;
+            justify-content: flex-end;
 
-        align-items: stretch;
-    }
+            gap: 8px;
+        }
 
-    .search-input-wrapper {
-        max-width: 100%;
-    }
+        .btn-batal,
+        .btn-simpan {
+            border: none;
 
-    .btn-cari {
-        width: 100%;
-    }
+            padding: 11px 17px;
 
-    .table-responsive {
-        border-radius: 12px;
-    }
+            border-radius: 9px;
 
-    .table {
-        min-width: 850px;
-    }
+            cursor: pointer;
 
-    .pagination {
-        justify-content: center;
-    }
+            font-size: 12px;
 
-}
+            font-weight: bold;
+        }
 
+        .btn-batal {
+            background: #eef1f2;
 
-/* =========================================================
-   EXTRA SMALL
-   ========================================================= */
+            color: #64777e;
+        }
 
-@media(max-width: 480px) {
+        .btn-simpan {
+            background: linear-gradient(
+                135deg,
+                #65c5e8,
+                #369dca
+            );
 
-    .jenis-title {
-        font-size: 24px;
-    }
+            color: white;
+        }
 
-    .jenis-card-header h4 {
-        font-size: 16px;
-    }
+        /* =========================
+           EMPTY
+        ========================= */
 
-    .jenis-card-body {
-        padding: 15px;
-    }
+        .empty {
+            text-align: center;
 
-}
+            padding: 40px;
 
-</style>
+            color: #8aabb7;
 
+            font-size: 13px;
+        }
 
-<div class="jenis-container">
+        .empty i {
+            display: block;
 
-    
+            font-size: 35px;
 
-    <div class="jenis-header">
+            margin-bottom: 10px;
 
-        <h1 class="jenis-title">
-            Jenis Produk
-        </h1>
+            color: #a8ddec;
+        }
 
-        <p class="jenis-subtitle">
-            Kelola kategori dan jenis produk toko
-        </p>
+        /* =========================
+           RESPONSIVE
+        ========================= */
 
-    </div>
+        @media (max-width: 900px) {
 
+            .navbar {
+                height: auto;
 
-    
+                padding: 12px;
 
-    <?php if(session('success')): ?>
+                flex-wrap: wrap;
 
-        <div class="alert alert-success">
+                gap: 10px;
+            }
 
-            <i class="bi bi-check-circle-fill me-2"></i>
+            .logo {
+                margin-right: 0;
+            }
 
-            <?php echo e(session('success')); ?>
+            .menu {
+                order: 3;
 
+                width: 100%;
 
-        </div>
+                overflow-x: auto;
+            }
 
-    <?php endif; ?>
+            .navbar-right {
+                margin-left: auto;
+            }
 
+            .container {
+                width: 100%;
+            }
+        }
 
-    
+        @media (max-width: 600px) {
 
-    <?php if(session('error')): ?>
+            .navbar-right {
+                width: 100%;
 
-        <div class="alert alert-danger">
+                justify-content: space-between;
+            }
 
-            <i class="bi bi-exclamation-circle-fill me-2"></i>
+            .login-info {
+                flex: 1;
+            }
 
-            <?php echo e(session('error')); ?>
+            .page-title h1 {
+                font-size: 25px;
+            }
 
+            .card-body {
+                padding: 15px;
+            }
 
-        </div>
+            .card-header {
+                padding: 0 15px;
+            }
+        }
+    </style>
 
-    <?php endif; ?>
+</head>
 
+<body>
 
-    
+    <!-- =========================
+         NAVBAR
+    ========================= -->
 
-    <div class="btn-tambah-wrapper">
+    <nav class="navbar">
 
-        <a
-            href="<?php echo e(route('jenis-produk.create')); ?>"
-            class="btn-tambah"
-        >
+        <div class="logo">
 
-            <i class="bi bi-plus-lg"></i>
+            <div class="logo-icon">
+                <i class="fas fa-store"></i>
+            </div>
 
-            Tambah Jenis Produk
-
-        </a>
-
-    </div>
-
-
-    
-
-    <div class="jenis-card">
-
-
-        
-
-        <div class="jenis-card-header">
-
-            <h4>
-
-                <i class="bi bi-tags-fill"></i>
-
-                Daftar Jenis Produk
-
-            </h4>
-
-            <p>
-
-                <i class="bi bi-layers-fill me-1"></i>
-
-                Total <?php echo e($totalJenis); ?> Jenis
-
-            </p>
+            POS
 
         </div>
 
 
-        
+        <div class="menu">
 
-        <div class="jenis-card-body">
+            <!-- Dashboard -->
+            <a href="<?php echo e(route('dashboard')); ?>">
+                <i class="fas fa-home"></i>
+                Dashboard
+            </a>
+
+            <!-- User -->
+            <a href="<?php echo e(route('users.index')); ?>">
+                <i class="fas fa-users"></i>
+                User
+            </a>
+
+            <!-- Jenis Produk -->
+            <a href="<?php echo e(route('jenis-produk.index')); ?>"
+                class="active">
+
+                <i class="fas fa-tag"></i>
+
+                Jenis Produk
+
+            </a>
+
+            <!-- Produk -->
+            <a href="<?php echo e(route('produk.index')); ?>">
+                <i class="fas fa-box"></i>
+                Produk
+            </a>
+
+            <!-- Penjualan -->
+            <a href="<?php echo e(route('penjualan.index')); ?>">
+                <i class="fas fa-cart-shopping"></i>
+                Penjualan
+            </a>
+
+            <!-- Tentang -->
+            <a href="<?php echo e(route('tentang')); ?>">
+                <i class="fas fa-circle-info"></i>
+                Tentang
+            </a>
+
+        </div>
 
 
-            
+        <div class="navbar-right">
 
-            <form
-                action="<?php echo e(route('jenis-produk.index')); ?>"
-                method="GET"
-                class="search-box"
-            >
+            <div class="login-info">
 
-                <div class="search-input-wrapper">
+                <i class="fas fa-user"></i>
 
-                    <i class="bi bi-search"></i>
+                <div>
 
-                    <input
-                        type="text"
-                        name="search"
-                        value="<?php echo e(request('search')); ?>"
-                        class="form-control"
-                        placeholder="Cari nama jenis produk..."
-                    >
+                    <span>Login sebagai</span>
+
+                    <strong>
+                        <?php echo e(auth()->user()->name ?? 'User'); ?>
+
+                    </strong>
 
                 </div>
 
+            </div>
 
-                <button
-                    type="submit"
-                    class="btn-cari"
-                >
 
-                    <i class="bi bi-search"></i>
+            <form action="<?php echo e(route('logout')); ?>"
+                method="POST">
 
-                    Cari
+                <?php echo csrf_field(); ?>
+
+                <button type="submit"
+                    class="logout">
+
+                    <i class="fas fa-right-from-bracket"></i>
+
+                    Logout
 
                 </button>
 
             </form>
 
+        </div>
 
-            
+    </nav>
 
-            <div class="table-responsive">
 
-                <table class="table">
+    <!-- =========================
+         CONTAINER
+    ========================= -->
 
-                    <thead>
+    <div class="container">
 
-                        <tr>
+        <div class="page-title">
 
-                            
-                            <th style="width: 80px;">
-                                No
-                            </th>
+            <h1>
+                Jenis Produk
+            </h1>
 
-                            
-                            <th style="width: 200px;">
-                                User
-                            </th>
+            <p>
+                Kelola kategori dan jenis produk toko
+            </p>
 
-                            
-                            <th>
-                                Nama Jenis Produk
-                            </th>
+        </div>
 
-                            
-                            <th style="width: 190px;">
-                                Jumlah Produk
-                            </th>
 
-                            
-                            <th style="width: 190px;">
-                                Aksi
-                            </th>
+        <!-- BUTTON TAMBAH -->
 
-                        </tr>
+        <button type="button"
+            class="btn-tambah"
+            onclick="openModal()">
 
-                    </thead>
+            <i class="fas fa-plus"></i>
 
+            Tambah Jenis Produk
 
-                    <tbody>
+        </button>
 
-                        <?php $__empty_1 = true; $__currentLoopData = $jenisProduk; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
 
-                            <tr>
+        <!-- CARD -->
 
+        <div class="card">
 
-                                
+            <div class="card-header">
 
-                                <td>
+                <div class="card-title">
 
-                                    <span class="badge-nomor">
+                    <i class="fas fa-tags"></i>
 
-                                        <?php echo e($jenisProduk->firstItem() + $loop->index); ?>
+                    Daftar Jenis Produk
 
+                </div>
 
-                                    </span>
 
-                                </td>
+                <div class="total">
 
+                    <i class="fas fa-layer-group"></i>
 
-                                
+                    Total <?php echo e($jenisProduk->count()); ?> Jenis
 
-                                <td>
-
-                                    <span class="nama-user">
-
-                                        <i class="bi bi-person-fill"></i>
-
-                                        <?php echo e($item->user->name ?? '-'); ?>
-
-
-                                    </span>
-
-                                </td>
-
-
-                                
-
-                                <td>
-
-                                    <span class="nama-jenis">
-
-                                        <i class="bi bi-tag-fill"></i>
-
-                                        <?php echo e($item->nama); ?>
-
-
-                                    </span>
-
-                                </td>
-
-
-                                
-
-                                <td>
-
-                                    <span class="badge-jumlah">
-
-                                        <i class="bi bi-box-seam"></i>
-
-                                        <?php echo e($item->produk_count); ?>
-
-
-                                        Produk
-
-                                    </span>
-
-                                </td>
-
-
-                                
-
-                                <td>
-
-                                    <a
-                                        href="<?php echo e(route('jenis-produk.edit', $item->id)); ?>"
-                                        class="btn-edit"
-                                    >
-
-                                        <i class="bi bi-pencil-fill"></i>
-
-                                        Edit
-
-                                    </a>
-
-
-                                    <form
-                                        action="<?php echo e(route('jenis-produk.destroy', $item->id)); ?>"
-                                        method="POST"
-                                        class="d-inline"
-                                        onsubmit="return confirm('Yakin ingin menghapus jenis produk ini?')"
-                                    >
-
-                                        <?php echo csrf_field(); ?>
-
-                                        <?php echo method_field('DELETE'); ?>
-
-
-                                        <button
-                                            type="submit"
-                                            class="btn-hapus"
-                                        >
-
-                                            <i class="bi bi-trash-fill"></i>
-
-                                            Hapus
-
-                                        </button>
-
-                                    </form>
-
-                                </td>
-
-                            </tr>
-
-
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-
-
-                            
-
-                            <tr>
-
-                                <td
-                                    colspan="5"
-                                    class="text-center empty-state"
-                                >
-
-                                    <div class="empty-state-icon">
-
-                                        <i class="bi bi-tags"></i>
-
-                                    </div>
-
-                                    <p class="mt-3 mb-0">
-
-                                        Belum ada jenis produk.
-
-                                    </p>
-
-                                </td>
-
-                            </tr>
-
-
-                        <?php endif; ?>
-
-                    </tbody>
-
-                </table>
+                </div>
 
             </div>
 
 
-            
+            <div class="card-body">
 
-            <?php echo e($jenisProduk->links()); ?>
+                <!-- SUCCESS -->
+
+                <?php if(session('success')): ?>
+
+                    <div class="alert alert-success">
+
+                        <i class="fas fa-circle-check"></i>
+
+                        <?php echo e(session('success')); ?>
 
 
+                    </div>
+
+                <?php endif; ?>
+
+
+                <!-- ERROR -->
+
+                <?php if(session('error')): ?>
+
+                    <div class="alert alert-error">
+
+                        <i class="fas fa-circle-exclamation"></i>
+
+                        <?php echo e(session('error')); ?>
+
+
+                    </div>
+
+                <?php endif; ?>
+
+
+                <!-- SEARCH -->
+
+                <form action="<?php echo e(route('jenis-produk.index')); ?>"
+                    method="GET"
+                    class="search-box">
+
+                    <input
+                        type="text"
+                        name="search"
+                        class="search-input"
+                        placeholder="Cari nama jenis produk..."
+                        value="<?php echo e(request('search')); ?>">
+
+                    <button type="submit"
+                        class="btn-search">
+
+                        <i class="fas fa-search"></i>
+
+                        Cari
+
+                    </button>
+
+                </form>
+
+
+                <!-- TABLE -->
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th class="number">
+                                    No
+                                </th>
+
+                                <th>
+                                    User
+                                </th>
+
+                                <th>
+                                    Nama Jenis Produk
+                                </th>
+
+                                <th>
+                                    Jumlah Produk
+                                </th>
+
+                                <th>
+                                    Aksi
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <?php $__empty_1 = true; $__currentLoopData = $jenisProduk; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $jenis): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+
+                                <tr>
+
+                                    <!-- NO -->
+
+                                    <td class="number">
+
+                                        <span>
+                                            <?php echo e($index + 1); ?>
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- USER -->
+
+                                    <td>
+
+                                        <div class="user-name">
+
+                                            <div class="user-icon">
+
+                                                <i class="fas fa-user"></i>
+
+                                            </div>
+
+                                            <strong>
+
+                                                <?php echo e($jenis->user->name ?? 'Marika Rahayu'); ?>
+
+
+                                            </strong>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- NAMA JENIS PRODUK -->
+
+                                    <td>
+
+                                        <div class="name">
+
+                                            <div class="name-icon">
+
+                                                <i class="fas fa-tag"></i>
+
+                                            </div>
+
+                                            <?php echo e($jenis->nama); ?>
+
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- JUMLAH PRODUK -->
+
+                                    <td>
+
+                                        <span class="jumlah">
+
+                                            <i class="fas fa-box"></i>
+
+                                            <?php echo e($jenis->produk_count); ?>
+
+
+                                            Produk
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- AKSI -->
+
+                                    <td>
+
+                                        <div class="actions">
+
+                                            <!-- EDIT -->
+
+                                            <a href="<?php echo e(route('jenis-produk.edit', $jenis->id)); ?>"
+                                                class="btn-edit">
+
+                                                <i class="fas fa-pen"></i>
+
+                                                Edit
+
+                                            </a>
+
+
+                                            <!-- HAPUS -->
+
+                                            <form
+                                                action="<?php echo e(route('jenis-produk.destroy', $jenis->id)); ?>"
+                                                method="POST"
+                                                onsubmit="return confirm('Apakah kamu yakin ingin menghapus jenis produk ini?')"
+                                                style="display:inline;">
+
+                                                <?php echo csrf_field(); ?>
+
+                                                <?php echo method_field('DELETE'); ?>
+
+                                                <button type="submit"
+                                                    class="btn-hapus">
+
+                                                    <i class="fas fa-trash"></i>
+
+                                                    Hapus
+
+                                                </button>
+
+                                            </form>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+
+                                <tr>
+
+                                    <td colspan="5"
+                                        class="empty">
+
+                                        <i class="fas fa-tags"></i>
+
+                                        Belum ada jenis produk.
+
+                                    </td>
+
+                                </tr>
+
+                            <?php endif; ?>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
-</div>
 
-<?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\PointOfSale2\resources\views/jenis_produk/index.blade.php ENDPATH**/ ?>
+    <!-- =========================
+         MODAL TAMBAH
+    ========================= -->
+
+    <div id="modalTambah"
+        class="modal-overlay">
+
+        <div class="modal-box">
+
+            <div class="modal-header">
+
+                <h3>
+
+                    <i class="fas fa-tag"></i>
+
+                    Tambah Jenis Produk
+
+                </h3>
+
+
+                <button type="button"
+                    class="btn-close"
+                    onclick="closeModal()">
+
+                    &times;
+
+                </button>
+
+            </div>
+
+
+            <form action="<?php echo e(route('jenis-produk.store')); ?>"
+                method="POST">
+
+                <?php echo csrf_field(); ?>
+
+                <div class="modal-body">
+
+                    <div class="form-group">
+
+                        <label for="nama">
+
+                            Nama Jenis Produk
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nama"
+                            name="nama"
+                            placeholder="Masukkan nama jenis produk..."
+                            value="<?php echo e(old('nama')); ?>"
+                            autocomplete="off"
+                            required>
+
+
+                        <?php $__errorArgs = ['nama'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+
+                            <small class="error">
+
+                                <?php echo e($message); ?>
+
+
+                            </small>
+
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                        class="btn-batal"
+                        onclick="closeModal()">
+
+                        Batal
+
+                    </button>
+
+
+                    <button type="submit"
+                        class="btn-simpan">
+
+                        <i class="fas fa-save"></i>
+
+                        Simpan
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        function openModal() {
+
+            const modal =
+                document.getElementById('modalTambah');
+
+            modal.classList.add('active');
+
+            setTimeout(function () {
+
+                document
+                    .getElementById('nama')
+                    .focus();
+
+            }, 100);
+
+        }
+
+
+        function closeModal() {
+
+            document
+                .getElementById('modalTambah')
+                .classList.remove('active');
+
+        }
+
+
+        document
+            .getElementById('modalTambah')
+            .addEventListener('click', function (event) {
+
+                if (event.target === this) {
+
+                    closeModal();
+
+                }
+
+            });
+
+
+        document.addEventListener(
+            'keydown',
+            function (event) {
+
+                if (event.key === 'Escape') {
+
+                    closeModal();
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html><?php /**PATH C:\laragon\www\PointOfSale2\resources\views/jenis_produk/index.blade.php ENDPATH**/ ?>

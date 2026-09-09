@@ -8,14 +8,30 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RoleMiddleware
 {
-    public function handle(Request $request, Closure $next, ...$roles): Response
-    {
+    public function handle(
+        Request $request,
+        Closure $next,
+        ...$roles
+    ): Response {
+
+        // Jika belum login
         if (!$request->user()) {
             return redirect()->route('login');
         }
 
-        // cek role user
-        if (!in_array($request->user()->role?->name, $roles)) {
+        // Ambil role user
+        $userRole = strtolower(
+            $request->user()->role?->name ?? ''
+        );
+
+        // Ubah semua role yang ada di route menjadi huruf kecil
+        $allowedRoles = array_map(
+            'strtolower',
+            $roles
+        );
+
+        // Jika role tidak sesuai
+        if (!in_array($userRole, $allowedRoles)) {
             abort(403, 'Akses ditolak');
         }
 

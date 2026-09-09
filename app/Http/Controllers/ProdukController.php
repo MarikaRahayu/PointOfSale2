@@ -17,8 +17,6 @@ class ProdukController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('viewAny', Produk::class);
-
         $keyword = $request->search;
 
         $products = Produk::with([
@@ -29,30 +27,35 @@ class ProdukController extends Controller
                 $query->where('nama', 'like', "%{$keyword}%");
             })
             ->latest()
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
 
         return view('produk.index', compact('products'));
     }
+
 
     /**
      * Form tambah produk
      */
     public function create()
     {
-        $this->authorize('create', Produk::class);
-
-        // Ambil jenis produk sesuai urutan ID di database
+        // Ambil semua jenis produk berdasarkan ID
         $jenisProduk = JenisProduk::orderBy('id', 'asc')->get();
 
         return view('produk.create', compact('jenisProduk'));
     }
+
 
     /**
      * Menyimpan produk baru
      */
     public function store(Request $request)
     {
-        $this->authorize('create', Produk::class);
+        /*
+        |--------------------------------------------------------------------------
+        | Validasi
+        |--------------------------------------------------------------------------
+        */
 
         $validated = $request->validate([
             'foto' => [
@@ -62,7 +65,6 @@ class ProdukController extends Controller
                 'max:2048',
             ],
 
-            // ID harus berasal dari tabel jenis_produk
             'jenis_produk_id' => [
                 'required',
                 'integer',
@@ -94,6 +96,7 @@ class ProdukController extends Controller
             ],
         ]);
 
+
         /*
         |--------------------------------------------------------------------------
         | Upload Foto
@@ -106,6 +109,7 @@ class ProdukController extends Controller
             $foto = $request->file('foto')
                 ->store('products', 'public');
         }
+
 
         /*
         |--------------------------------------------------------------------------
@@ -123,20 +127,38 @@ class ProdukController extends Controller
             'stok' => $validated['stok'],
         ]);
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | Redirect
+        |--------------------------------------------------------------------------
+        */
+
         return redirect()
             ->route('produk.index')
             ->with('success', 'Produk berhasil ditambahkan');
     }
+
 
     /**
      * Form edit produk
      */
     public function edit(Produk $produk)
     {
-        $this->authorize('update', $produk);
+        /*
+        |--------------------------------------------------------------------------
+        | Ambil Jenis Produk
+        |--------------------------------------------------------------------------
+        */
 
-        // Ambil jenis produk sesuai urutan ID database
         $jenisProduk = JenisProduk::orderBy('id', 'asc')->get();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Tampilkan Form Edit
+        |--------------------------------------------------------------------------
+        */
 
         return view('produk.edit', [
             'product' => $produk,
@@ -144,24 +166,34 @@ class ProdukController extends Controller
         ]);
     }
 
+
     /**
      * Update produk
      */
-    public function update(UpdateRequest $request, Produk $produk)
-    {
-        $this->authorize('update', $produk);
-
-        $data = $request->validated();
+    public function update(
+        UpdateRequest $request,
+        Produk $produk
+    ) {
 
         /*
         |--------------------------------------------------------------------------
-        | Pastikan jenis_produk_id berupa integer
+        | Ambil data yang sudah divalidasi
+        |--------------------------------------------------------------------------
+        */
+
+        $data = $request->validated();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Pastikan jenis_produk_id integer
         |--------------------------------------------------------------------------
         */
 
         if (isset($data['jenis_produk_id'])) {
             $data['jenis_produk_id'] = (int) $data['jenis_produk_id'];
         }
+
 
         /*
         |--------------------------------------------------------------------------
@@ -179,10 +211,12 @@ class ProdukController extends Controller
                 Storage::disk('public')->delete($produk->foto);
             }
 
+
             // Simpan foto baru
             $data['foto'] = $request->file('foto')
                 ->store('products', 'public');
         }
+
 
         /*
         |--------------------------------------------------------------------------
@@ -192,25 +226,35 @@ class ProdukController extends Controller
 
         $produk->update($data);
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | Redirect
+        |--------------------------------------------------------------------------
+        */
+
         return redirect()
             ->route('produk.index')
             ->with('success', 'Produk berhasil diupdate');
     }
+
 
     /**
      * Hapus produk
      */
     public function destroy(Produk $produk)
     {
-        $this->authorize('delete', $produk);
-
         /*
         |--------------------------------------------------------------------------
         | Hapus item penjualan yang menggunakan produk
         |--------------------------------------------------------------------------
         */
 
-        ItemPenjualan::where('produk_id', $produk->id)->delete();
+        ItemPenjualan::where(
+            'produk_id',
+            $produk->id
+        )->delete();
+
 
         /*
         |--------------------------------------------------------------------------
@@ -225,6 +269,7 @@ class ProdukController extends Controller
             Storage::disk('public')->delete($produk->foto);
         }
 
+
         /*
         |--------------------------------------------------------------------------
         | Hapus produk
@@ -232,6 +277,13 @@ class ProdukController extends Controller
         */
 
         $produk->delete();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Redirect
+        |--------------------------------------------------------------------------
+        */
 
         return redirect()
             ->route('produk.index')

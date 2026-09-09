@@ -2,9 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\JenisProdukController;
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JenisProdukController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PenjualanController;
@@ -12,35 +13,47 @@ use App\Http\Controllers\PenjualanController;
 
 /*
 |--------------------------------------------------------------------------
-| Redirect
+| REDIRECT
 |--------------------------------------------------------------------------
 */
 
 Route::get('/', function () {
 
-    return Auth::check()
-        ? redirect()->route('dashboard')
-        : redirect()->route('login');
+    if (Auth::check()) {
+        return redirect()->route('dashboard');
+    }
+
+    return redirect()->route('login');
 
 });
 
 
 /*
 |--------------------------------------------------------------------------
-| Guest
+| GUEST
 |--------------------------------------------------------------------------
 */
 
 Route::middleware('guest')->group(function () {
 
-    // Halaman Login
+    /*
+    |--------------------------------------------------------------------------
+    | Login
+    |--------------------------------------------------------------------------
+    */
+
     Route::get('/login', [
         AuthController::class,
         'index'
     ])->name('login');
 
 
-    // Proses Login
+    /*
+    |--------------------------------------------------------------------------
+    | Proses Login
+    |--------------------------------------------------------------------------
+    */
+
     Route::post('/auth', [
         AuthController::class,
         'auth'
@@ -51,7 +64,7 @@ Route::middleware('guest')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| Authenticated User
+| AUTHENTICATED
 |--------------------------------------------------------------------------
 */
 
@@ -60,7 +73,7 @@ Route::middleware('auth')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Dashboard
+    | DASHBOARD
     |--------------------------------------------------------------------------
     */
 
@@ -69,18 +82,12 @@ Route::middleware('auth')->group(function () {
         'index'
     ])->name('dashboard');
 
-    Route::middleware('role:admin')->group(function () {
-
-    Route::resource('users', UserController::class);
-
-    Route::resource('jenis-produk', JenisProdukController::class);
-
-});
-
 
     /*
     |--------------------------------------------------------------------------
-    | Tentang
+    | TENTANG
+    |--------------------------------------------------------------------------
+    | Admin dan Kasir bisa mengakses halaman Tentang
     |--------------------------------------------------------------------------
     */
 
@@ -93,40 +100,44 @@ Route::middleware('auth')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Logout
+    | ADMIN ONLY
     |--------------------------------------------------------------------------
     */
 
-    Route::post('/logout', [
-        AuthController::class,
-        'logout'
-    ])->name('logout');
+    Route::middleware('role:admin')->group(function () {
 
 
-   /*
-|--------------------------------------------------------------------------
-| Admin
-|--------------------------------------------------------------------------
-*/
+        /*
+        |--------------------------------------------------------------------------
+        | USERS
+        |--------------------------------------------------------------------------
+        */
 
-Route::middleware('role:admin')->group(function () {
+        Route::resource(
+            'users',
+            UserController::class
+        );
 
-    // User
-    Route::resource('users', UserController::class);
 
-    // Jenis Produk
-    Route::resource(
-        'jenis-produk',
-        JenisProdukController::class
-    )->except([
-        'show'
-    ]);
+        /*
+        |--------------------------------------------------------------------------
+        | JENIS PRODUK
+        |--------------------------------------------------------------------------
+        */
 
-});
+        Route::resource(
+            'jenis-produk',
+            JenisProdukController::class
+        )->except([
+            'show'
+        ]);
+
+    });
+
 
     /*
     |--------------------------------------------------------------------------
-    | Admin & Kasir
+    | ADMIN & KASIR
     |--------------------------------------------------------------------------
     */
 
@@ -135,146 +146,125 @@ Route::middleware('role:admin')->group(function () {
 
         /*
         |--------------------------------------------------------------------------
-        | Produk
+        | PRODUK
         |--------------------------------------------------------------------------
         */
 
         Route::resource(
             'produk',
             ProdukController::class
-        );
+        )->except([
+            'show'
+        ]);
 
 
         /*
         |--------------------------------------------------------------------------
-        | Penjualan
+        | PENJUALAN
         |--------------------------------------------------------------------------
         */
 
-        Route::controller(PenjualanController::class)->group(function () {
+        /*
+        | Halaman utama penjualan
+        */
+        Route::get(
+            '/penjualan',
+            [PenjualanController::class, 'index']
+        )->name('penjualan.index');
 
 
-            /*
-            |--------------------------------------------------------------
-            | Halaman utama
-            |--------------------------------------------------------------
-            */
-
-            Route::get(
-                '/penjualan',
-                'index'
-            )->name('penjualan.index');
+        /*
+        | Tambah transaksi
+        */
+        Route::get(
+            '/penjualan/create',
+            [PenjualanController::class, 'create']
+        )->name('penjualan.create');
 
 
-            /*
-            |--------------------------------------------------------------
-            | Tambah transaksi
-            |--------------------------------------------------------------
-            */
-
-            Route::get(
-                '/penjualan/create',
-                'create'
-            )->name('penjualan.create');
+        /*
+        | Simpan transaksi
+        */
+        Route::post(
+            '/penjualan',
+            [PenjualanController::class, 'store']
+        )->name('penjualan.store');
 
 
-            /*
-            |--------------------------------------------------------------
-            | Simpan transaksi
-            |--------------------------------------------------------------
-            */
-
-            Route::post(
-                '/penjualan',
-                'store'
-            )->name('penjualan.store');
+        /*
+        | Checkout
+        */
+        Route::post(
+            '/penjualan/checkout',
+            [PenjualanController::class, 'checkout']
+        )->name('penjualan.checkout');
 
 
-            /*
-            |--------------------------------------------------------------
-            | Checkout
-            |--------------------------------------------------------------
-            */
-
-            Route::post(
-                '/penjualan/checkout',
-                'checkout'
-            )->name('penjualan.checkout');
+        /*
+        | Cancel transaksi
+        */
+        Route::post(
+            '/penjualan/cancel',
+            [PenjualanController::class, 'cancel']
+        )->name('penjualan.cancel');
 
 
-            /*
-            |--------------------------------------------------------------
-            | Cancel transaksi
-            |--------------------------------------------------------------
-            */
-
-            Route::post(
-                '/penjualan/cancel',
-                'cancel'
-            )->name('penjualan.cancel');
+        /*
+        | Hapus item penjualan
+        */
+        Route::delete(
+            '/penjualan/item/{id}',
+            [PenjualanController::class, 'destroyItem']
+        )->name('penjualan.destroyItem');
 
 
-            /*
-            |--------------------------------------------------------------
-            | Hapus item penjualan
-            |--------------------------------------------------------------
-            */
-
-            Route::delete(
-                '/penjualan/item/{id}',
-                'destroyItem'
-            )->name('penjualan.destroyItem');
+        /*
+        | Edit transaksi
+        */
+        Route::get(
+            '/penjualan/{penjualan}/edit',
+            [PenjualanController::class, 'edit']
+        )->name('penjualan.edit');
 
 
-            /*
-            |--------------------------------------------------------------
-            | Edit transaksi
-            |--------------------------------------------------------------
-            */
-
-            Route::get(
-                '/penjualan/{penjualan}/edit',
-                'edit'
-            )->name('penjualan.edit');
+        /*
+        | Update transaksi
+        */
+        Route::put(
+            '/penjualan/{penjualan}',
+            [PenjualanController::class, 'update']
+        )->name('penjualan.update');
 
 
-            /*
-            |--------------------------------------------------------------
-            | Update transaksi
-            |--------------------------------------------------------------
-            */
-
-            Route::put(
-                '/penjualan/{penjualan}',
-                'update'
-            )->name('penjualan.update');
+        /*
+        | Hapus transaksi
+        */
+        Route::delete(
+            '/penjualan/{penjualan}',
+            [PenjualanController::class, 'destroy']
+        )->name('penjualan.destroy');
 
 
-            /*
-            |--------------------------------------------------------------
-            | Hapus transaksi
-            |--------------------------------------------------------------
-            */
-
-            Route::delete(
-                '/penjualan/{penjualan}',
-                'destroy'
-            )->name('penjualan.destroy');
-
-
-            /*
-            |--------------------------------------------------------------
-            | Detail transaksi
-            |--------------------------------------------------------------
-            */
-
-            Route::get(
-                '/penjualan/{penjualan}',
-                'show'
-            )->name('penjualan.show');
-
-        });
+        /*
+        | Detail transaksi
+        */
+        Route::get(
+            '/penjualan/{penjualan}',
+            [PenjualanController::class, 'show']
+        )->name('penjualan.show');
 
     });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | LOGOUT
+    |--------------------------------------------------------------------------
+    */
+
+    Route::post('/logout', [
+        AuthController::class,
+        'logout'
+    ])->name('logout');
 
 });

@@ -2,14 +2,28 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
     public function run(): void
     {
-      User::factory()->count(5)->create();
+        // USER BAWAAN TETAP ADA
+        User::factory(10)->create();
+
+        // TAMBAHAN ADMIN PERMANEN
+        User::updateOrCreate(
+            [
+                'email' => 'marika@gmail.com',
+            ],
+            [
+                'role_id' => 1,
+                'name' => 'Marika Rahayu',
+                'password' => Hash::make('password'),
+                'email_verified_at' => now(),
+            ]
+        );
     }
 }
